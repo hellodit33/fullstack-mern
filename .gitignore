@@ -1,4 +1,7 @@
+#no modules
 /node_modules
+
+#no env 
 /config/.env
 
 #production
