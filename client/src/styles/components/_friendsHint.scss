@@ -1,0 +1,85 @@
+.get-friends-container {
+  width: 356px;
+  border-radius: 20px;
+  padding: 20px 20px 10px;
+  background: $black;
+  color: $white;
+  border: solid 1px $white;
+
+  h4 {
+    font-size: 1.4rem;
+    color: $white;
+    
+  }
+  .icon {
+    margin: 16px auto;
+    width: 100%;
+    text-align: center;
+    i {
+      font-size: 1.6rem;
+      color: $color-3;
+    }
+  }
+  ul {
+    width: 100%;
+padding: 10px;
+    border-radius: 20px;
+    border: solid 1px $color-1;
+    margin-top: 10px;
+    background: $white;
+
+
+
+    .user-hint {
+      display: grid;
+      grid-template-columns: 20% 50% 30%;
+      align-items: center;
+      margin: 8px 0;    
+      background: $white;
+
+
+
+      img {
+        height: 46px;
+        width: 46px;
+        border-radius: 12px;
+        object-fit: cover;
+        box-shadow: 0 0 2px rgba(51, 51, 51, 0.377);
+        background: $white;
+
+
+      }
+      p {
+        text-align: left;
+        font-size: 0.9rem;
+        font-family: $font-3;
+        background: $white;
+
+
+      }
+      span {
+        text-align: right;
+            background: $white;
+
+
+
+        button {
+          background: $color-1;
+          color: $color-4;
+          padding: 10px;
+          transition: 0.2s;
+          border-radius: 20px;
+          font-size: 0.9rem;
+          
+          
+          
+
+          &:hover {
+            background: $color-4;
+            color: $color-1;
+          }
+        }
+      }
+    }
+  }
+}
