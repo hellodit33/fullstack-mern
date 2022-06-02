@@ -27,7 +27,7 @@ const NewPostForm = () => {
       dispatch(getPosts());
       cancelPost();
     } else {
-      alert("Veuillez entrer un message");
+      alert("Please write something");
     }
   };
 
