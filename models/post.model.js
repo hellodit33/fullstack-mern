@@ -12,12 +12,7 @@ const PostSchema = new mongoose.Schema(
       maxlength: 500,
     },
     picture: {
-      public_id: {
-        type: String,
-      },
-      url: {
-        type: String,
-      },
+      type: String,
     },
     video: {
       type: String,
