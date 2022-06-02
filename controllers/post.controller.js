@@ -16,7 +16,7 @@ module.exports.readPost = (req, res) => {
 };
 
 module.exports.createPost = async (req, res) => {
-  /*let fileName;
+  let fileName;
 
   if (req.file !== null) {
     try {
@@ -39,12 +39,12 @@ module.exports.createPost = async (req, res) => {
         `${__dirname}/../client/public/uploads/posts/${fileName}`
       )
     );
-  }*/
+  }
 
   const newPost = new postModel({
     posterId: req.body.posterId,
     message: req.body.message,
-    /*picture: req.file !== null ? "./uploads/posts/" + fileName : "",*/
+    picture: req.file !== null ? "./uploads/posts/" + fileName : "",
     video: req.body.video,
     likers: [],
     comments: [],
@@ -53,7 +53,7 @@ module.exports.createPost = async (req, res) => {
     const post = await newPost.save();
     return res.status(201).json(post);
   } catch (err) {
-    return res.status(400);
+    return res.status(400).send("error");
   }
 };
 
