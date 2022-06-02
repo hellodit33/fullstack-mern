@@ -9,14 +9,14 @@ const upload = require("../utils/multer");
 module.exports.uploadProfile = async (req, res) => {
   try {
     const result = await cloudinary.uploader.upload(req.file.path);
-    res.json(result);
+
     await UserModel.findByIdAndUpdate(
       req.body.userId,
       { $set: { picture: result.secure_url, cloudinary_id: result.public_id } },
       { new: true, upsert: true, setDefaultsOnInsert: true },
       (err, data) => {
         if (!err) return res.send(data);
-        else return res.status(500).send({ message: err });
+        else return res.send({ message: err });
       }
     );
   } catch (err) {
