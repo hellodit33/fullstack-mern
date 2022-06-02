@@ -39,7 +39,7 @@ module.exports.createPost = async (req, res) => {
   const newPost = new postModel({
     posterId: req.body.posterId,
     message: req.body.message,
-    picture: req.file !== null ? result.secure_url : " ",
+    picture: result.secure_url,
     cloudinary_id: result.public_id,
     video: req.body.video,
     likers: [],
