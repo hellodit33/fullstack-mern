@@ -31,8 +31,6 @@ const UpdateProfile = () => {
     setUpdateForm(false);
   };
 
-  const [checked, setChecked] = useState(true);
-
   return (
     <>
       <div className="profile-home">
@@ -40,7 +38,6 @@ const UpdateProfile = () => {
         <div className="">
           <div className="profile-title">
             <h1>Your Hint Profile</h1>
-            {/*<h1>{userData.pseudo}</h1>*/}
           </div>
           <div className="update-container">
             <div className="left-part">
