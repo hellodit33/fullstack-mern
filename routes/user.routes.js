@@ -2,8 +2,8 @@ const router = require("express").Router();
 const authController = require("../controllers/auth.controller");
 const userController = require("../controllers/user.controller");
 const uploadController = require("../controllers/upload.controller");
-const multer = require("multer");
-const upload = multer();
+const cloudinary = require("../utils/cloudinary");
+const upload = require("../utils/multer");
 
 //Authorization to register
 router.post("/register", authController.signUp);
