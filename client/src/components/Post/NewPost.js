@@ -16,32 +16,33 @@ const NewPostForm = () => {
   const dispatch = useDispatch();
 
   const handlePost = async () => {
-    if (message || /*postPicture ||*/ video) {
+    if (message || postPicture || video) {
       const data = new FormData();
       data.append("posterId", userData._id);
       data.append("message", message);
-      /*if (file) data.append("file", file);*/
+      if (file) data.append("file", file);
       data.append("video", video);
 
       await dispatch(addPost(data));
       dispatch(getPosts());
+
       cancelPost();
     } else {
-      alert("Please write a post before posting");
+      alert("Please write something");
     }
   };
 
-  /*const handlePicture = (e) => {
+  const handlePicture = (e) => {
     setPostPicture(URL.createObjectURL(e.target.files[0]));
     setFile(e.target.files[0]);
     setVideo("");
-  };*/
+  };
 
   const cancelPost = () => {
     setMessage("");
-    /*setPostPicture("");*/
+    setPostPicture("");
     setVideo("");
-    /*setFile("");*/
+    setFile("");
   };
 
   useEffect(() => {
@@ -58,7 +59,7 @@ const NewPostForm = () => {
           setVideo(embed.split("&")[0]);
           findLink.splice(i, 1);
           setMessage(findLink.join(" "));
-          /*setPostPicture("");*/
+          setPostPicture("");
         }
       }
     };
@@ -98,7 +99,7 @@ const NewPostForm = () => {
               onChange={(e) => setMessage(e.target.value)}
               value={message}
             />
-            {message || /*postPicture ||*/ video.length > 20 ? (
+            {message || postPicture || video.length > 20 ? (
               <li className="card-container">
                 <div className="card-left">
                   <img src={userData.picture} alt="user-pic" />
@@ -112,7 +113,7 @@ const NewPostForm = () => {
                   </div>
                   <div className="content">
                     <p>{message}</p>
-                    {/* <img src={postPicture} alt="" /> */}
+                    <img src={postPicture} alt="" />
                     {video && (
                       <iframe
                         src={video}
@@ -128,7 +129,7 @@ const NewPostForm = () => {
             ) : null}
             <div className="footer-form">
               <span className="icon">
-                {/*isEmpty(video) && (
+                {isEmpty(video) && (
                   <>
                     <i className="fa-solid fa-image icon"></i>
                     <input
@@ -139,7 +140,7 @@ const NewPostForm = () => {
                       onChange={(e) => handlePicture(e)}
                     />
                   </>
-                )*/}
+                )}
                 {video && (
                   <button onClick={() => setVideo("")}>delete video</button>
                 )}
@@ -147,7 +148,7 @@ const NewPostForm = () => {
               {!isEmpty(error.format) && <p>{error.format}</p>}
               {!isEmpty(error.maxSize) && <p>{error.maxSize}</p>}
               <div className="btn-send">
-                {message || /*postPicture || */ video.length > 20 ? (
+                {message || postPicture || video.length > 20 ? (
                   <button className="cancel" onClick={cancelPost}>
                     cancel your post
                   </button>

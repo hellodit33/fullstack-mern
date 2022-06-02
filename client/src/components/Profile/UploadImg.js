@@ -7,15 +7,14 @@ const UploadImg = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userReducer);
 
-  const handlePicture = async (e) => {
+  const handlePicture = (e) => {
     e.preventDefault();
     const data = new FormData();
     data.append("name", userData.pseudo);
     data.append("userId", userData._id);
     data.append("file", file);
 
-    await dispatch(uploadPicture(data, userData._id));
-    window.location.href = "/profile";
+    dispatch(uploadPicture(data, userData._id));
   };
   return (
     <form action="" onSubmit={handlePicture} className="upload-pic">
