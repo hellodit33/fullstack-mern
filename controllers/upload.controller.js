@@ -22,9 +22,7 @@ module.exports.uploadProfile = async (req, res) => {
 
   await pipeline(
     req.file.stream,
-    fs.createWriteStream(
-      `${__dirname}/../client/public/uploads/profil/${fileName}`
-    )
+    fs.createWriteStream(`${__dirname}/./uploads/profil/${fileName}`)
   );
 
   try {
