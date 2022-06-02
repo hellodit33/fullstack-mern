@@ -8,21 +8,6 @@ const upload = require("../utils/multer");
 
 module.exports.uploadProfile = async (req, res) => {
   try {
-    if (
-      req.file.detectedMimeType != "image/jpg" &&
-      req.file.detectedMimeType != "image/png" &&
-      req.file.detectedMimeType != "image/jpeg"
-    )
-      throw Error("invalid file");
-
-    if (req.file.size > 500000) throw Error("max size");
-  } catch (err) {
-    console.log(err);
-    const errors = uploadErrors(err);
-    return res.status(201).json({ errors });
-  }
-
-  try {
     const result = await cloudinary.uploader.upload(req.file.path);
     res.json(result);
     await UserModel.findByIdAndUpdate(
