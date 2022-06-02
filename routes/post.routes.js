@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const postController = require("../controllers/post.controller");
-const multer = require("multer");
-const upload = multer();
+const cloudinary = require("../utils/cloudinary");
+const upload = require("../utils/multer");
 
 router.get("/", postController.readPost);
 router.post("/", upload.single("file"), postController.createPost);

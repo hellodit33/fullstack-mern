@@ -13,6 +13,12 @@ const HintSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
+  synopsis: {
+    type: String,
+  },
+  video: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("hint", HintSchema);
