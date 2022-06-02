@@ -20,7 +20,7 @@ const NewPostForm = () => {
       const data = new FormData();
       data.append("posterId", userData._id);
       data.append("message", message);
-      if (file) data.append("file", file);
+      /*if (file) data.append("file", file);*/
       data.append("video", video);
 
       await dispatch(addPost(data));
@@ -31,14 +31,11 @@ const NewPostForm = () => {
     }
   };
 
-  const handlePicture = (e) => {
+  /*const handlePicture = (e) => {
     setPostPicture(URL.createObjectURL(e.target.files[0]));
-    const file = e.target.files[0];
-    setFileToBase(file);
+    setFile(e.target.files[0]);
     setVideo("");
-  };
-
-  const setFileToBase = (file) => {};
+  };*/
 
   const cancelPost = () => {
     setMessage("");
@@ -131,7 +128,7 @@ const NewPostForm = () => {
             ) : null}
             <div className="footer-form">
               <span className="icon">
-                {isEmpty(video) && (
+                {/*isEmpty(video) && (
                   <>
                     <i className="fa-solid fa-image icon"></i>
                     <input
@@ -142,7 +139,7 @@ const NewPostForm = () => {
                       onChange={(e) => handlePicture(e)}
                     />
                   </>
-                )}
+                )*/}
                 {video && (
                   <button onClick={() => setVideo("")}>delete video</button>
                 )}

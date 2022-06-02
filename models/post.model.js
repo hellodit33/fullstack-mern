@@ -11,12 +11,12 @@ const PostSchema = new mongoose.Schema(
       trim: true,
       maxlength: 500,
     },
-    picture: {
+    /*picture: {
       type: String,
-    },
-    cloudinary_id: {
+    },*/
+    /*cloudinary_id: {
       type: String,
-    },
+    },*/
     video: {
       type: String,
     },
