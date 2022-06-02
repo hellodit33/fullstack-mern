@@ -16,7 +16,7 @@ const NewPostForm = () => {
   const dispatch = useDispatch();
 
   const handlePost = async () => {
-    if (message || postPicture || video) {
+    if (message || /*postPicture ||*/ video) {
       const data = new FormData();
       data.append("posterId", userData._id);
       data.append("message", message);
@@ -27,7 +27,7 @@ const NewPostForm = () => {
       dispatch(getPosts());
       cancelPost();
     } else {
-      alert("Please write something");
+      alert("Please write a post before posting");
     }
   };
 
@@ -39,9 +39,9 @@ const NewPostForm = () => {
 
   const cancelPost = () => {
     setMessage("");
-    setPostPicture("");
+    /*setPostPicture("");*/
     setVideo("");
-    setFile("");
+    /*setFile("");*/
   };
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const NewPostForm = () => {
           setVideo(embed.split("&")[0]);
           findLink.splice(i, 1);
           setMessage(findLink.join(" "));
-          setPostPicture("");
+          /*setPostPicture("");*/
         }
       }
     };
@@ -98,7 +98,7 @@ const NewPostForm = () => {
               onChange={(e) => setMessage(e.target.value)}
               value={message}
             />
-            {message || postPicture || video.length > 20 ? (
+            {message || /*postPicture ||*/ video.length > 20 ? (
               <li className="card-container">
                 <div className="card-left">
                   <img src={userData.picture} alt="user-pic" />
@@ -112,7 +112,7 @@ const NewPostForm = () => {
                   </div>
                   <div className="content">
                     <p>{message}</p>
-                    <img src={postPicture} alt="" />
+                    {/* <img src={postPicture} alt="" /> */}
                     {video && (
                       <iframe
                         src={video}
@@ -147,7 +147,7 @@ const NewPostForm = () => {
               {!isEmpty(error.format) && <p>{error.format}</p>}
               {!isEmpty(error.maxSize) && <p>{error.maxSize}</p>}
               <div className="btn-send">
-                {message || postPicture || video.length > 20 ? (
+                {message || /*postPicture || */ video.length > 20 ? (
                   <button className="cancel" onClick={cancelPost}>
                     cancel your post
                   </button>

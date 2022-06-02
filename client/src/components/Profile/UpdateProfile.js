@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import LeftNav from "../LeftNav";
 import { useDispatch, useSelector } from "react-redux";
 import UploadImg from "./UploadImg";
-import Onboarding from "./Onboarding";
-import {
-  updateBio,
-  updatePlatforms,
-  updateStreamingPatterns,
-} from "../../actions/user.actions";
+import { updateBio } from "../../actions/user.actions";
 import { dateParser } from "../Utils";
 import FollowHandler from "./FollowHandler";
 import chatty from "./chatty.png";
