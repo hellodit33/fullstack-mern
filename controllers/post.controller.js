@@ -18,7 +18,9 @@ module.exports.readPost = (req, res) => {
 };
 
 module.exports.createPost = async (req, res) => {
-  const result = await cloudinary.uploader.upload(req.file.path);
+  if (req.file !== null) {
+    const result = await cloudinary.uploader.upload(req.file.path);
+  }
 
   /*if (req.file !== null) {
     try {
