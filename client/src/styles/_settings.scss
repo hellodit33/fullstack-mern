@@ -46,7 +46,7 @@ $shadow: rgb(219, 218, 218);
 
 a,
 a:visited {
-  color: $color-3;
+  color: $white;
 }
 input,
 textarea {
@@ -98,11 +98,11 @@ body {
   color: $color-3;
 }
 .error {
-  color: red;
+  color: $white;
   font-weight: bold;
 }
 .success {
-  color: green;
+  color: $color-1 ;
   font-weight: bold;
 }
 .popup-content {
@@ -112,4 +112,28 @@ body {
 .popup-arrow {
   background-color: $white;
 
+}
+
+input[type=password] {
+  &:focus {
+    border:solid 3px $color-1;
+    background-color: $black;
+    color: $white;  
+  }  
+}
+
+input[type=text] {
+  &:focus {
+    border:solid 3px $color-1;
+    background-color: $black;
+    color: $white;  
+  }  
+}
+
+input[type=email] {
+  &:focus {
+    border:solid 3px $color-1;
+    background-color: $black;
+    color: $white;  
+  }  
 }

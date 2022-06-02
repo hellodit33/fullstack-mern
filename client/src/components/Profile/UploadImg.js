@@ -18,7 +18,7 @@ const UploadImg = () => {
   };
   return (
     <form action="" onSubmit={handlePicture} className="upload-pic">
-      <label htmlFor="file" class="file-label">
+      <label htmlFor="file" className="file-label">
         pick a new picture
       </label>
       <input

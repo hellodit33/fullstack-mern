@@ -9,10 +9,16 @@
   i {
     font-size: 1.5rem;
     margin: 20px 0;
-    .fa-spinner {
-      background-color: $color-1;
-      color: $black;
-    }
+   
+  }
+
+  .fa-spinner {
+    background-color: $color-1;
+    color: $black;
+  }
+
+  .isLoading {
+    background-color: $color-1;
   }
 
   .data {
@@ -55,6 +61,7 @@
       width: 60px;
       box-shadow: 2px 2px 2px rgba(51, 51, 51, 0.16);
       object-fit: cover;
+      background-color: $color-1;
       
     }
     h3 {
@@ -126,13 +133,16 @@
             @media screen and(max-width: 632px) {
               position: absolute;
               top: 40px;
+            
             }
             @media screen and(max-width: 590px) {
               left: 68px;
+              border:none;
+              padding: 0;
             }
             @media screen and(max-width: 440px) {
               left: 14px;
-              top: 60px;
+              top: 75px;
             }
           }
         }

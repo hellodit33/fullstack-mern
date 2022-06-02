@@ -21,7 +21,7 @@ const SignInForm = () => {
           emailError.innerHTML = res.data.errors.email;
           passwordError.innerHTML = res.data.errors.password;
         } else {
-          window.location = "/";
+          window.location = "/hints";
         }
       })
       .catch((err) => {
@@ -34,7 +34,7 @@ const SignInForm = () => {
       <label htmlFor="email">Email</label>
       <br />
       <input
-        type="text"
+        type="email"
         name="email"
         id="email"
         onChange={(e) => setEmail(e.target.value)}

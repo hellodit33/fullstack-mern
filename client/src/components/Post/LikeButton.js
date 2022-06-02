@@ -24,7 +24,7 @@ const LikeButton = ({ post }) => {
     <div className="like-container" style={{ backgroundColor: "white" }}>
       {uid === null && (
         <Popup
-          trigger={<i class="fa-regular fa-heart"></i>}
+          trigger={<i className="fa-regular fa-heart"></i>}
           style={{ backgroundColor: "white" }}
           position={["bottom center", "bottom right", "bottom left"]}
           closeOnDocumentClick
@@ -35,9 +35,9 @@ const LikeButton = ({ post }) => {
         </Popup>
       )}
       {uid && liked === false && (
-        <i class="fa-regular fa-heart" onClick={like}></i>
+        <i className="fa-regular fa-heart" onClick={like}></i>
       )}
-      {uid && liked && <i class="fa-solid fa-heart" onClick={unlike}></i>}
+      {uid && liked && <i className="fa-solid fa-heart" onClick={unlike}></i>}
     </div>
   );
 };

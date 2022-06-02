@@ -30,7 +30,7 @@ const Card = ({ post }) => {
   return (
     <li className="card-container" key={post._id}>
       {isLoading ? (
-        <i class="fa-solid fa-spinner"></i>
+        <i className="fa-solid fa-spinner"></i>
       ) : (
         <>
           <div className="card-left">
@@ -98,7 +98,7 @@ const Card = ({ post }) => {
             {userData._id === post.posterId && (
               <div className="button-container">
                 <div onClick={() => setIsUpdated(!isUpdated)}>
-                  <i class="fa-solid fa-pen-to-square"></i>
+                  <i className="fa-solid fa-pen-to-square"></i>
                 </div>
                 <DeleteCard id={post._id} />
               </div>
@@ -106,13 +106,13 @@ const Card = ({ post }) => {
             <div className="card-footer">
               <div className="comment-icon">
                 <i
-                  class="fa-solid fa-comment"
+                  className="fa-solid fa-comment"
                   onClick={() => setShowComments(!showComments)}
                 ></i>
                 <span>{post.comments.length}</span>
               </div>
               <LikeButton />
-              <i class="fa-solid fa-share"></i>
+              <i className="fa-solid fa-share"></i>
             </div>
             {showComments && <CardComments post={post} />}
           </div>

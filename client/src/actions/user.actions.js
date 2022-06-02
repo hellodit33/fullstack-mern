@@ -6,6 +6,14 @@ export const UPDATE_BIO = "UPDATE_BIO";
 export const UPDATE_PLATFORMS = "UPDATE_PLATFORMS";
 export const UPDATE_STREAMING_PATTERN = "UPDATE_STREAMING_PATTERN";
 export const UPDATE_MOOD = "UPDATE_MOOD";
+export const UPDATE_RENT = "UPDATE_RENT";
+export const UPDATE_GENRES = "UPDATE_GENRES";
+export const UPDATE_COGENRES = "UPDATE_COGENRES";
+export const UPDATE_INTERESTS = "UPDATE_INTERESTS";
+export const UPDATE_COWATCHING = "UPDATE_COWATCHING";
+export const UPDATE_GENDER = "UPDATE_GENDER";
+
+export const UPDATE_YEAR_BORN = "UPDATE_YEAR_BORN";
 
 export const FOLLOW_USER = "FOLLOW_USER";
 export const UNFOLLOW_USER = "UNFOLLOW_USER";
@@ -99,6 +107,125 @@ export const updateMood = (userId, mood) => {
         dispatch({
           type: UPDATE_MOOD,
           payload: mood,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const updateRent = (userId, rent) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { rent },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_RENT,
+          payload: rent,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const updateGenres = (userId, genres) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { genres },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_GENRES,
+          payload: genres,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const updateCoGenres = (userId, cogenres) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { cogenres },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_COGENRES,
+          payload: cogenres,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const updateInterests = (userId, interests) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { interests },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_INTERESTS,
+          payload: interests,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const updateCoWatching = (userId, cowatching) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { cowatching },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_COWATCHING,
+          payload: cowatching,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const updateGender = (userId, gender) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { gender },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_GENDER,
+          payload: gender,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const updateYearBorn = (userId, yearBorn) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { yearBorn },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_YEAR_BORN,
+          payload: yearBorn,
         });
       })
       .catch((err) => console.log(err));

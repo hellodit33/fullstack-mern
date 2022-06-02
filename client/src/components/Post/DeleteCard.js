@@ -13,7 +13,7 @@ const DeleteCard = (props) => {
         }
       }}
     >
-      <i class="fa-solid fa-trash-can"></i>
+      <i className="fa-solid fa-trash-can"></i>
     </div>
   );
 };

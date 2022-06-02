@@ -43,7 +43,7 @@ const FriendsHint = () => {
       <h4>Suggestions</h4>
       {isLoading ? (
         <div className="icon">
-          <i class="fa-solid fa-spinner"></i>
+          <i className="fa-solid fa-spinner"></i>
         </div>
       ) : (
         <ul>

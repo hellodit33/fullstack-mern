@@ -7,6 +7,13 @@ import {
   UPLOAD_PICTURE,
   UPDATE_STREAMING_PATTERN,
   UPDATE_MOOD,
+  UPDATE_RENT,
+  UPDATE_GENRES,
+  UPDATE_COGENRES,
+  UPDATE_INTERESTS,
+  UPDATE_COWATCHING,
+  UPDATE_GENDER,
+  UPDATE_YEAR_BORN,
 } from "../actions/user.actions";
 
 const initialState = {};
@@ -39,6 +46,41 @@ export default function userReducer(state = initialState, action) {
       return {
         ...state,
         mood: action.payload,
+      };
+    case UPDATE_RENT:
+      return {
+        ...state,
+        rent: action.payload,
+      };
+    case UPDATE_GENRES:
+      return {
+        ...state,
+        genres: action.payload,
+      };
+    case UPDATE_COGENRES:
+      return {
+        ...state,
+        cogenres: action.payload,
+      };
+    case UPDATE_INTERESTS:
+      return {
+        ...state,
+        interests: action.payload,
+      };
+    case UPDATE_COWATCHING:
+      return {
+        ...state,
+        cowatching: action.payload,
+      };
+    case UPDATE_GENDER:
+      return {
+        ...state,
+        gender: action.payload,
+      };
+    case UPDATE_YEAR_BORN:
+      return {
+        ...state,
+        yearBorn: action.payload,
       };
     case FOLLOW_USER:
       return {

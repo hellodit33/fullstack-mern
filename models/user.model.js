@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema(
       max: 1024,
       minlength: 6,
     },
+    yearBorn: {
+      type: String,
+    },
     picture: {
       type: String,
       default: "./uploads/profil/random-user.png",
@@ -36,8 +39,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       max: 1024,
     },
+    gender: {
+      type: String,
+    },
     platforms: {
       type: [String],
+    },
+    cowatching: {
+      type: Boolean,
     },
     streamingPattern: {
       type: [String],
@@ -45,7 +54,13 @@ const userSchema = new mongoose.Schema(
     mood: {
       type: String,
     },
+    rent: {
+      type: String,
+    },
     genres: {
+      type: [String],
+    },
+    cogenres: {
       type: [String],
     },
     antitriggers: {

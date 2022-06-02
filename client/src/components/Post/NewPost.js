@@ -68,13 +68,15 @@ const NewPostForm = () => {
   return (
     <div className="post-container">
       {isLoading ? (
-        <i class="fa-solid fa-spinner"></i>
+        <div className="isLoading">
+          <i className="fa-solid fa-spinner"></i>
+        </div>
       ) : (
         <>
           <div className="data">
             <p>
               <span>{userData.following ? userData.following.length : 0}</span>{" "}
-              Following
+              Subscription
               {userData.following && userData.following.length > 1 ? "s" : null}
             </p>
             <p>
@@ -128,7 +130,7 @@ const NewPostForm = () => {
               <span className="icon">
                 {isEmpty(video) && (
                   <>
-                    <i class="fa-solid fa-image icon"></i>
+                    <i className="fa-solid fa-image icon"></i>
                     <input
                       type="file"
                       id="file-upload"

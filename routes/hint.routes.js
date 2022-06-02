@@ -2,6 +2,7 @@ const router = require("express").Router();
 const hintController = require("../controllers/hint.controller");
 
 router.get("/", hintController.readPost);
+
 /*
 router.patch("/like-post/:id", hintController.likePost);
 router.patch("/:id", hintController.unlikePost);

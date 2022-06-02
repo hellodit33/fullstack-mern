@@ -12,7 +12,7 @@ const Navbar = () => {
     <nav>
       <div className="nav-container">
         <div className="logo">
-          <NavLink to="/">
+          <NavLink to="/hints">
             <div className="logo">
               <img src="./img/icons/hint.png" alt="icon" />
             </div>
@@ -33,7 +33,7 @@ const Navbar = () => {
             <li></li>
             <li>
               <NavLink to="/profile">
-                <i class="fa-solid fa-arrow-right-to-bracket login"></i>
+                <i className="fa-solid fa-arrow-right-to-bracket login"></i>
               </NavLink>
             </li>
           </ul>

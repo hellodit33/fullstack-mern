@@ -41,7 +41,7 @@ const EditDelete = ({ comment, postId }) => {
           style={{ backgroundColor: "#fefffe" }}
         >
           <i
-            class="fa-solid fa-pen-to-square"
+            className="fa-solid fa-pen-to-square"
             style={{ backgroundColor: "#fefffe" }}
           ></i>
         </span>
@@ -71,7 +71,7 @@ const EditDelete = ({ comment, postId }) => {
                 }
               }}
             >
-              <i class="fa-solid fa-trash-can"></i>
+              <i className="fa-solid fa-trash-can"></i>
             </span>
             <input type="submit" value="send changes"></input>
           </div>

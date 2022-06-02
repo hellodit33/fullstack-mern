@@ -32,6 +32,8 @@ const Hints = () => {
     return () => window.removeEventListener("scroll", loadMore);
   }, [loadPost, dispatch, count]);
 
+  
+
   return (
     <div className="thread-container">
       <ul>
