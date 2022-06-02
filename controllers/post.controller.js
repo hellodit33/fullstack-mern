@@ -6,6 +6,7 @@ const ObjectID = require("mongoose").Types.ObjectId;
 const fs = require("fs");
 const { promisify } = require("util");
 const pipeline = promisify(require("stream").pipeline);
+const cloudinary = require("../utils/cloudinary");
 
 module.exports.readPost = (req, res) => {
   PostModel.find((err, data) => {
@@ -33,18 +34,15 @@ module.exports.createPost = async (req, res) => {
       return res.status(201).json({ errors });
     }
     fileName = req.body.posterId + Date.now() + ".jpg";
-    await pipeline(
-      req.file.stream,
-      fs.createWriteStream(
-        `${__dirname}/../client/public/uploads/posts/${fileName}`
-      )
-    );
   }
+  const result = await cloudinary.uploader.upload(picture, {
+    folder: "posts",
+  });
 
   const newPost = new postModel({
     posterId: req.body.posterId,
     message: req.body.message,
-    picture: req.file !== null ? "./uploads/posts/" + fileName : "",
+    picture: { public_id: result.public_id, url: result.public_url },
     video: req.body.video,
     likers: [],
     comments: [],
