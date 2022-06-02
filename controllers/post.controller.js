@@ -51,7 +51,7 @@ module.exports.createPost = async (req, res) => {
   });
   try {
     const post = await newPost.save();
-    return res.status(201);
+    return res.status(201).json(post);
   } catch (err) {
     return res.status(400);
   }
