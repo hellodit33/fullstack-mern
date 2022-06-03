@@ -128,7 +128,7 @@ const NewPostForm = () => {
             ) : null}
             <div className="footer-form">
               <span className="icon">
-                {isEmpty(video) && (
+                {/*isEmpty(video) && (
                   <>
                     <i className="fa-solid fa-image icon"></i>
                     <input
@@ -139,7 +139,7 @@ const NewPostForm = () => {
                       onChange={(e) => handlePicture(e)}
                     />
                   </>
-                )}
+                )*/}
                 {video && (
                   <button onClick={() => setVideo("")}>delete video</button>
                 )}
