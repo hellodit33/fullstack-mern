@@ -4,8 +4,8 @@ const { promisify } = require("util");
 const pipeline = promisify(require("stream").pipeline);
 const { uploadErrors } = require("../utils/errors.utils");
 
-module.exports.uploadProfile = async (req, res) => {
-  try {
+/*module.exports.uploadProfile = async (req, res) => {
+ try {
     if (
       req.file.detectedMimeType != "image/jpg" &&
       req.file.detectedMimeType != "image/png" &&
@@ -41,3 +41,4 @@ module.exports.uploadProfile = async (req, res) => {
     return res.status(500);
   }
 };
+*/
