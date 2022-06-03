@@ -18,7 +18,7 @@ const UploadImg = () => {
     /*window.location.href = "/profile";*/
   };
   return (
-    <form action="" onSubmit={handlePicture} className="upload-pic">
+    <form action="" /*onSubmit={handlePicture} */ className="upload-pic">
       <label htmlFor="file" className="file-label">
         pick a new picture
       </label>
