@@ -15,8 +15,6 @@ const Profile = () => {
           <Log signin={false} signup={true} />
           <br />
           <br />
-          {/*<div className="img-container">
-            <img src="./img/log.jpg" alt="img-log" width="100%" /> </div>*/}
         </div>
       )}
     </div>

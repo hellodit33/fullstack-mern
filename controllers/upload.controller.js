@@ -4,11 +4,7 @@ const { promisify } = require("util");
 const pipeline = promisify(require("stream").pipeline);
 const { uploadErrors } = require("../utils/errors.utils");
 
-const cloudinary = require("../utils/cloudinary");
-const upload = require("../utils/multer");
-
 module.exports.uploadProfile = async (req, res) => {
-  /*multer code
   try {
     if (
       req.file.detectedMimeType != "image/jpg" &&
@@ -30,8 +26,8 @@ module.exports.uploadProfile = async (req, res) => {
       `${__dirname}/../client/public/uploads/profil/${fileName}`
     )
   );
-  
-   try {
+
+  try {
     await UserModel.findByIdAndUpdate(
       req.body.userId,
       { $set: { picture: "./uploads/profil/" + fileName } },
@@ -39,24 +35,6 @@ module.exports.uploadProfile = async (req, res) => {
       (err, data) => {
         if (!err) return res.send(data);
         else return res.status(500).send({ message: err });
-      }
-    );
-  } catch (err) {
-    return res.status(500);
-  }
-};
-*/
-  //cloudinary+multer code after deployment
-  try {
-    const result = await cloudinary.uploader.upload(req.file.path);
-
-    await UserModel.findByIdAndUpdate(
-      req.body.userId,
-      { $set: { picture: result.secure_url, cloudinary_id: result.public_id } },
-      { new: true, upsert: true, setDefaultsOnInsert: true },
-      (err, data) => {
-        if (!err) return res.send(data);
-        else return res.send({ message: err });
       }
     );
   } catch (err) {

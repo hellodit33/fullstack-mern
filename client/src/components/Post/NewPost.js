@@ -25,7 +25,6 @@ const NewPostForm = () => {
 
       await dispatch(addPost(data));
       dispatch(getPosts());
-
       cancelPost();
     } else {
       alert("Please write something");
