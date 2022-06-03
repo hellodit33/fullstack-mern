@@ -8,6 +8,7 @@ require("dotenv").config({ path: "./config/.env" });
 require("./config/db");
 const { checkUser, requireAuth } = require("./middleware/auth.middleware");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
