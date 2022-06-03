@@ -659,7 +659,7 @@ const Onboarding = () => {
                   />
                   <label htmlFor="action">Action</label>
                 </div>
-                <img src={bucket}></img>
+                <img src={bucket} alt="bucket of popcorn"></img>
                 <button onClick={handleGenres}>done!</button>
               </div>
             </>
@@ -673,7 +673,7 @@ const Onboarding = () => {
                   enjoy from time to time!
                 </h2>
                 <div className="drawer-group">
-                  <img src={drawer}></img>
+                  <img src={drawer} alt="drawer to store liked genres"></img>
 
                   <div className="group">
                     <input

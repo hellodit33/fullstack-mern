@@ -54,7 +54,7 @@ const Trends = () => {
                             })
                             .join("")
                         }
-                        alt="profil-pic"
+                        alt="profile-pic"
                       />
                     )}
                   </div>
