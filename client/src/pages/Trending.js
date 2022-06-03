@@ -8,6 +8,9 @@ import Trends from "../components/Trends.js";
 import FriendsHint from "../components/Profile/FriendsHint.js";
 
 const Trending = () => {
+  /**
+   * @desc uid is a condition for being able to post new posts, otherwise the user needs to log in. If the user is not logged in they can see the posts
+   */
   const uid = useContext(UidContext);
 
   return (

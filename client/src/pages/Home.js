@@ -7,6 +7,7 @@ import Trends from "../components/Trends";
 import { isEmpty } from "../components/Utils";
 
 const Home = () => {
+  //Home is not a used page for now
   const uid = useContext(UidContext);
   const trendList = useSelector((state) => state.trendingReducer);
   return (

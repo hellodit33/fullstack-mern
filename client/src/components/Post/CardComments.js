@@ -6,11 +6,21 @@ import { isEmpty, timestampParser } from "../Utils";
 import EditDeleteComment from "./EditDeleteComment";
 
 const CardComments = ({ post }) => {
+  //state for the comment text
   const [text, setText] = useState("");
+
+  //redux gets the users and user data state
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
+
+  //import dispatch for the redux store
   const dispatch = useDispatch();
 
+  /**
+   *
+   * @param {string} e
+   * @desc handleComment dispatches the new comment and adds it to the database and to the posts so that it is published immediately through a double dispatch
+   */
   const handleComment = (e) => {
     e.preventDefault();
     if (text) {

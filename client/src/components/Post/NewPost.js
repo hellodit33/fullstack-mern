@@ -5,38 +5,49 @@ import { NavLink } from "react-router-dom";
 import { addPost, getPosts } from "../../actions/post.actions";
 
 const NewPostForm = () => {
+  //state for is loading
   const [isLoading, setIsLoading] = useState(true);
+
+  //states for the inputs for the post
   const [message, setMessage] = useState("");
   const [postPicture, setPostPicture] = useState(null);
   const [video, setVideo] = useState("");
   const [file, setFile] = useState();
+
+  //Redux gets the user data and the error state
   const userData = useSelector((state) => state.userReducer);
   const error = useSelector((state) => state.errorReducer.postError);
 
+  //import dispatch for the redux store
   const dispatch = useDispatch();
 
+  //sending the post to the redux store
   const handlePost = async () => {
     if (message || postPicture || video) {
       const data = new FormData();
       data.append("posterId", userData._id);
       data.append("message", message);
+      //the file upload does not work on heroku so the image icon to upload is desactivated
       if (file) data.append("file", file);
       data.append("video", video);
-
+      //dispatch the data so that it creates a post
       await dispatch(addPost(data));
+      //dispatch the posts again so that the post gets published immediately on the feed
       dispatch(getPosts());
+      //cancel the post so that the user's post is not kept in the input field
       cancelPost();
     } else {
-      alert("Veuillez entrer un message");
+      alert("Please write a personal hint.");
     }
   };
-
+  //the handle picture function does not work on heroku so it's desactivated
   const handlePicture = (e) => {
     setPostPicture(URL.createObjectURL(e.target.files[0]));
     setFile(e.target.files[0]);
     setVideo("");
   };
 
+  //Cancel post function appears when the user starts writing something
   const cancelPost = () => {
     setMessage("");
     setPostPicture("");
@@ -47,6 +58,7 @@ const NewPostForm = () => {
   useEffect(() => {
     if (!isEmpty(userData)) setIsLoading(false);
 
+    //this function embeds the youtube links as a preview and as a video when posted
     const handleVideo = () => {
       let findLink = message.split(" ");
       for (let i = 0; i < findLink.length; i++) {
@@ -126,7 +138,8 @@ const NewPostForm = () => {
             ) : null}
             <div className="footer-form">
               <span className="icon">
-                {/*isEmpty(video) && (
+                {/* the image input is desactivated because it does not work on heroku
+                isEmpty(video) && (
                   <>
                     <i className="fa-solid fa-image icon"></i>
                     <input

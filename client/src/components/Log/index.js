@@ -3,9 +3,15 @@ import SignUpForm from "./SignUpForm";
 import SignInForm from "./SignInForm";
 
 const Log = (props) => {
+  //states for the signup and signinmodals
   const [signUpModal, setSignUpModal] = useState(props.signup);
   const [signInModal, setSignInModal] = useState(props.signin);
 
+  /**
+   *
+   * @param {string} e
+   * @desc handleModals shows either the register form or the login form, depending on where the user clicks (id on li elements)
+   */
   const handleModals = (e) => {
     if (e.target.id === "register") {
       e.preventDefault();

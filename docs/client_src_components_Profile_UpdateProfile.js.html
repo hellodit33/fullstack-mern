@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/src/components/Profile/UpdateProfile.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/src/components/Profile/UpdateProfile.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import LeftNav from "../LeftNav";
+import { useDispatch, useSelector } from "react-redux";
+import UploadImg from "./UploadImg";
+import { updateBio } from "../../actions/user.actions";
+import { dateParser } from "../Utils";
+import FollowHandler from "./FollowHandler";
+import chatty from "./chatty.png";
+
+const UpdateProfile = () => {
+  //importing dispatch for the redux store
+  const dispatch = useDispatch();
+
+  //states for updating the bio
+  const [bio, setBio] = useState("");
+  const [updateForm, setUpdateForm] = useState(false);
+
+  //Redux gets the user data, users data and error state
+  const userData = useSelector((state) => state.userReducer);
+  const usersData = useSelector((state) => state.usersReducer);
+  const error = useSelector((state) => state.errorReducer.userError);
+
+  //states for showing the followers and following popup, at first false, get true when the user clicks
+  const [followingPopup, setFollowingPopup] = useState(false);
+  const [followersPopup, setFollowersPopup] = useState(false);
+
+  /**
+   * @desc handleUpdate updates the bio
+   */
+  const handleUpdate = () => {
+    dispatch(updateBio(userData._id, bio));
+    setUpdateForm(false);
+  };
+
+  return (
+    &lt;>
+      &lt;div className="profile-home">
+        &lt;LeftNav />
+        &lt;div className="">
+          &lt;div className="profile-title">
+            &lt;h1>Your Hint Profile&lt;/h1>
+          &lt;/div>
+          &lt;div className="update-container">
+            &lt;div className="left-part">
+              &lt;img src={userData.picture} alt="user-pic" />
+              &lt;div>
+                &lt;UploadImg />
+
+                {/* the upload image does not work on Heroku so the errors are also commented out 
+                {errors.maxSize}}
+              {errors.format}*/}
+              &lt;/div>
+              &lt;div className="bio-update">
+                &lt;h3>Bio&lt;/h3>
+                {updateForm === false &amp;&amp; (
+                  &lt;>
+                    &lt;p onClick={() => setUpdateForm(!updateForm)}>
+                      {userData.bio}
+                    &lt;/p>
+                    &lt;button onClick={() => setUpdateForm(!updateForm)}>
+                      change your bio
+                    &lt;/button>
+                  &lt;/>
+                )}
+                {updateForm &amp;&amp; (
+                  &lt;>
+                    &lt;textarea
+                      type="text"
+                      defaultValue={userData.bio}
+                      onChange={(e) => setBio(e.target.value)}
+                    >&lt;/textarea>
+                    &lt;button onClick={handleUpdate}>change your bio&lt;/button>
+                  &lt;/>
+                )}
+              &lt;/div>
+              &lt;h4>
+                {/* parsing the created at date from mongodb thanks to the function in utils */}
+                Hint Member since: &lt;br />
+                {dateParser(userData.createdAt)}
+              &lt;/h4>
+              &lt;h5 onClick={() => setFollowingPopup(true)}>
+                Following :{" "}
+                {userData.following ? userData.following.length : ""} Hint
+                members
+              &lt;/h5>
+              &lt;h5 onClick={() => setFollowersPopup(true)}>
+                Followers :{" "}
+                {userData.followers ? userData.followers.length : ""} Hint
+                members
+              &lt;/h5>
+            &lt;/div>
+            &lt;div className="right-part">
+              &lt;div className="button-onboarding">
+                &lt;img src={chatty} alt="chatty-mcchatbot">&lt;/img>
+                {/* taking the user to onboarding process */}
+                &lt;button
+                  onClick={(event) => (window.location.href = "/onboarding")}
+                >
+                  Start Onboarding!
+                &lt;/button>
+              &lt;/div>
+
+              {/* showing to the users the followers and subscriptions */}
+              {followingPopup &amp;&amp; (
+                &lt;div className="popup-profil-container">
+                  &lt;div className="modal">
+                    &lt;h3>Following&lt;/h3>
+                    &lt;span
+                      className="cross"
+                      onClick={() => setFollowingPopup(false)}
+                    >
+                      &amp;#10005;
+                    &lt;/span>
+                    &lt;ul>
+                      {usersData.map((user) => {
+                        for (let i = 0; i &lt; userData.following.length; i++) {
+                          if (user._id === userData.following[i]) {
+                            return (
+                              &lt;li key={user._id}>
+                                &lt;img src={user.picture} alt="user-pic" />
+                                &lt;h4>{user.pseudo}&lt;/h4>
+                                &lt;div className="follow-handler">
+                                  &lt;FollowHandler
+                                    idToFollow={user._id}
+                                    type={"suggestion"}
+                                  />
+                                &lt;/div>
+                              &lt;/li>
+                            );
+                          }
+                        }
+                        return null;
+                      })}
+                    &lt;/ul>
+                  &lt;/div>
+                &lt;/div>
+              )}
+              {followersPopup &amp;&amp; (
+                &lt;div className="popup-profil-container">
+                  &lt;div className="modal">
+                    &lt;h3>Followers&lt;/h3>
+                    &lt;span
+                      className="cross"
+                      onClick={() => setFollowersPopup(false)}
+                    >
+                      &amp;#10005;
+                    &lt;/span>
+                    &lt;ul>
+                      {usersData.map((user) => {
+                        for (let i = 0; i &lt; userData.followers.length; i++) {
+                          if (user._id === userData.followers[i]) {
+                            return (
+                              &lt;li key={user._id}>
+                                &lt;img src={user.picture} alt="user-pic" />
+                                &lt;h4>{user.pseudo}&lt;/h4>
+                                &lt;div className="follow-handler">
+                                  &lt;FollowHandler
+                                    idToFollow={user._id}
+                                    type={"suggestion"}
+                                  />
+                                &lt;/div>
+                              &lt;/li>
+                            );
+                          }
+                        }
+                        return null;
+                      })}
+                    &lt;/ul>
+                  &lt;/div>
+                &lt;/div>
+              )}
+            &lt;/div>
+          &lt;/div>
+        &lt;/div>
+      &lt;/div>
+    &lt;/>
+  );
+};
+
+export default UpdateProfile;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Welcome</a></h2><h3>Modules</h3><ul><li><a href="module-reducers.html">reducers</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addComment">addComment</a></li><li><a href="global.html#addPost">addPost</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#buildNav">buildNav</a></li><li><a href="global.html#checkUser">checkUser</a></li><li><a href="global.html#commentPost">commentPost</a></li><li><a href="global.html#cookieParser">cookieParser</a></li><li><a href="global.html#cors">cors</a></li><li><a href="global.html#corsOptions">corsOptions</a></li><li><a href="global.html#createPost">createPost</a></li><li><a href="global.html#dateParser">dateParser</a></li><li><a href="global.html#deleteComment">deleteComment</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#deletePostComment">deletePostComment</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#editComment">editComment</a></li><li><a href="global.html#editPostComment">editPostComment</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#follow">follow</a></li><li><a href="global.html#followUser">followUser</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getHint">getHint</a></li><li><a href="global.html#getPosts">getPosts</a></li><li><a href="global.html#getTrends">getTrends</a></li><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#getUsers">getUsers</a></li><li><a href="global.html#isEmpty">isEmpty</a></li><li><a href="global.html#likePost">likePost</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#maxAge">maxAge</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#publish">publish</a></li><li><a href="global.html#readPost">readPost</a></li><li><a href="global.html#signIn">signIn</a></li><li><a href="global.html#signInErrors">signInErrors</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#signUpErrors">signUpErrors</a></li><li><a href="global.html#timestampParser">timestampParser</a></li><li><a href="global.html#unfollow">unfollow</a></li><li><a href="global.html#unfollowUser">unfollowUser</a></li><li><a href="global.html#unlikePost">unlikePost</a></li><li><a href="global.html#updateBio">updateBio</a></li><li><a href="global.html#updateCoGenres">updateCoGenres</a></li><li><a href="global.html#updateCoWatching">updateCoWatching</a></li><li><a href="global.html#updateGender">updateGender</a></li><li><a href="global.html#updateGenres">updateGenres</a></li><li><a href="global.html#updateInterests">updateInterests</a></li><li><a href="global.html#updateMood">updateMood</a></li><li><a href="global.html#updatePlatforms">updatePlatforms</a></li><li><a href="global.html#updatePost">updatePost</a></li><li><a href="global.html#updateRent">updateRent</a></li><li><a href="global.html#updateStreamingPatterns">updateStreamingPatterns</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateYearBorn">updateYearBorn</a></li><li><a href="global.html#uploadErrors">uploadErrors</a></li><li><a href="global.html#uploadPicture">uploadPicture</a></li><li><a href="global.html#uploadProfile">uploadProfile</a></li><li><a href="global.html#userInfo">userInfo</a></li><li><a href="global.html#userRoutes">userRoutes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Jun 03 2022 23:36:43 GMT+0200 (centraleuropeisk sommartid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

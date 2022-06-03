@@ -1,3 +1,9 @@
+/**
+ * @file reducers/index.js
+ * @module reducers
+ * @desc This is the encapsulation for all reducers
+ * @return {Object} List of reducers combined
+ */
 import { combineReducers } from "redux";
 import userReducer from "./user.reducer";
 import usersReducer from "./users.reducer";

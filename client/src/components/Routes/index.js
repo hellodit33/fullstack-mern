@@ -7,6 +7,9 @@ import Hints from "../../pages/Hints";
 import Onboarding from "../Profile/Onboarding";
 
 const index = () => {
+  /**
+   * @desc paths that take the user to hints, profile, trending and onboarding pages
+   */
   return (
     <div>
       <Router>

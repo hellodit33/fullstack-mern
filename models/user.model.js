@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
   {
-    //trim - leaves out the blanks written by the user
+    //trim leaves out the blanks written by the user
     pseudo: {
       type: String,
       required: true,
@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema(
     yearBorn: {
       type: String,
     },
+    //the picture upload does not work on heroku but each new user gets the same default picture
     picture: {
       type: String,
       default: "./uploads/profil/random-user.png",
@@ -84,13 +85,14 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-//play function before saving into db, so that the password is crypted
+//this password crypting function is played before saving into db so that the password gets crypted before getting into db
 userSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
+//checking if user wrote the write info when trying to sign in
 userSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });
   if (user) {

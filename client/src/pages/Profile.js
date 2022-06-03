@@ -4,6 +4,9 @@ import { UidContext } from "../components/AppContext";
 import UpdateProfile from "../components/Profile/UpdateProfile";
 
 const Profile = () => {
+  /**
+   * @desc uid is a condition for showing profile info, otherwise the user needs to log in
+   */
   const uid = useContext(UidContext);
 
   return (

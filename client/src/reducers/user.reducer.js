@@ -16,8 +16,15 @@ import {
   UPDATE_YEAR_BORN,
 } from "../actions/user.actions";
 
+//Sets the initial state
 const initialState = {};
 
+/**
+ *
+ * @param {object} state
+ * @param {object} action
+ * @returns the states and action payload for each action case
+ */
 export default function userReducer(state = initialState, action) {
   switch (action.type) {
     case GET_USER:

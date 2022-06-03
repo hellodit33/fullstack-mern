@@ -1,9 +1,17 @@
+//upload controller requirements
 const UserModel = require("../models/user.model");
+const { uploadErrors } = require("../utils/errors.utils");
+//fs, promisify and pipeline don't work know because the upload image function does not work on Heroku
 const fs = require("fs");
 const { promisify } = require("util");
 const pipeline = promisify(require("stream").pipeline);
-const { uploadErrors } = require("../utils/errors.utils");
 
+/**
+ *
+ * @param {json} req
+ * @param {json} res
+ * @returns when this function works (not on heroku) it checks the size and the format of the file, sends error, and uploads the file thanks to multer, fs, promisify and pipeline
+ */
 module.exports.uploadProfile = async (req, res) => {
   try {
     if (

@@ -3,12 +3,18 @@ import { useState } from "react";
 import SignInForm from "./SignInForm";
 
 const SignUpForm = () => {
+  //states for the sign up form
   const [formSubmit, setFormSubmit] = useState(false);
   const [pseudo, setPseudo] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [controlPassword, setControlPassword] = useState("");
 
+  /**
+   *
+   * @param {string} e
+   * @desc function to sign up and to handle errors while signing up
+   */
   const handleRegister = async (e) => {
     e.preventDefault();
     const terms = document.getElementById("terms");
@@ -23,12 +29,14 @@ const SignUpForm = () => {
     passwordError.innerHTML = "";
     passwordConfirmError.innerHTML = "";
     termsError.innerHTML = "";
+    //error messages
     if (password !== controlPassword || !terms.checked) {
       if (password !== controlPassword)
         passwordConfirmError.innerHTML =
           "The passwords are not matching each others";
       if (!terms.checked) termsError.innerHTML = "Please accept the terms.";
     } else {
+      //sign up the user with POST /user/register route
       await axios({
         method: "post",
         url: `${process.env.REACT_APP_API_URL}api/user/register`,
@@ -45,6 +53,7 @@ const SignUpForm = () => {
             emailError.innerHTML = res.data.errors.email;
             passwordError.innerHTML = res.data.errors.password;
           } else {
+            //Submitting the form and signing up
             setFormSubmit(true);
           }
         })
@@ -64,7 +73,7 @@ const SignUpForm = () => {
         </>
       ) : (
         <form action="" onSubmit={handleRegister} id="sign-up-form">
-          <label htmlFor="pseudo">Pseudo</label>
+          <label htmlFor="pseudo">Username</label>
           <br />
           <input
             type="text"

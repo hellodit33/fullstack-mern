@@ -2,6 +2,9 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const LeftNav = () => {
+  /**
+   * @desc the left navbar linking to hints, trending and profile, and following the user when they scroll
+   */
   return (
     <div className="left-nav-container">
       <div className="icons">

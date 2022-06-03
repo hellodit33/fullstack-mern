@@ -5,7 +5,12 @@ import { UidContext } from "./AppContext";
 import Logout from "./Log/Logout";
 
 const Navbar = () => {
+  /**
+   * @desc uid is a condition for showing the name of the user and welcome, as well as the login or logout icon
+   */
   const uid = useContext(UidContext);
+
+  //Redux gets the userdata state
   const userData = useSelector((state) => state.userReducer);
 
   return (

@@ -1,8 +1,15 @@
+//auth.middleware requirements
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/user.model");
 
+/**
+ *
+ * @desc try catch block to grant request by JWT. The middleware verifies the token provided by the user, if it works it looks after the right user, if it does not it returns null
+ *
+ */
 module.exports.checkUser = (req, res, next) => {
   const token = req.cookies.jwt;
+  //check if token
   if (token) {
     jwt.verify(token, process.env.SECRET_TOKEN, async (err, decodedToken) => {
       if (err) {

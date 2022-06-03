@@ -1,3 +1,8 @@
+/**
+ *
+ * @param {object} err
+ * @returns all errors messages when signing up
+ */
 module.exports.signUpErrors = (err) => {
   let errors = { pseudo: "", email: "", password: "" };
   if (err.message.includes("pseudo")) errors.pseudo = "your pseudo is invalid";
@@ -16,6 +21,12 @@ module.exports.signUpErrors = (err) => {
   return errors;
 };
 
+/**
+ *
+ * @param {object} err
+ * @returns all error messages when signing up
+ */
+
 module.exports.signInErrors = (err) => {
   let errors = { email: "", password: "" };
   if (err.message.includes("email")) errors.email = "Unknown email";
@@ -25,6 +36,12 @@ module.exports.signInErrors = (err) => {
 
   return errors;
 };
+
+/**
+ *
+ * @param {object} err
+ * @returns all upload errors when uploading a user picture - this function does not work on heroku
+ */
 
 module.exports.uploadErrors = (err) => {
   let errors = { format: "", maxSize: "" };

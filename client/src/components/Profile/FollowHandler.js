@@ -4,10 +4,16 @@ import { followUser, unfollowUser } from "../../actions/user.actions";
 import { isEmpty } from "../Utils";
 
 const FollowHandler = ({ idToFollow, type }) => {
+  //redux gets the user data state
   const userData = useSelector((state) => state.userReducer);
+
+  //state for follow handler
   const [isFollowed, setIsFollowed] = useState(false);
+
+  //importing dispatch
   const dispatch = useDispatch();
 
+  //follow and unfollow users when clicking on button
   const handleFollow = () => {
     dispatch(followUser(userData._id, idToFollow));
     setIsFollowed(true);
@@ -18,6 +24,7 @@ const FollowHandler = ({ idToFollow, type }) => {
     setIsFollowed(false);
   };
 
+  //is followed is true if the userData says that the user follows the person, otherwise it's false
   useEffect(() => {
     if (!isEmpty(userData.following)) {
       if (userData.following.includes(idToFollow)) {
@@ -28,6 +35,8 @@ const FollowHandler = ({ idToFollow, type }) => {
 
   return (
     <>
+      {/*showing members to follow or that the user follows + suggestion to follow them if they don't follow them yet */}
+
       {isFollowed && !isEmpty(userData) && (
         <span onClick={handleUnfollow}>
           {type === "suggestion" && (

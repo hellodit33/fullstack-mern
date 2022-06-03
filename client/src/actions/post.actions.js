@@ -20,6 +20,11 @@ export const GET_TRENDS = "GET_TRENDS";
 // errors
 export const GET_POST_ERRORS = "GET_POST_ERRORS";
 
+/**
+ *
+ * @param {string} num
+ * @returns get all posts or get an array of posts depending on slice
+ */
 export const getPosts = (num) => {
   return (dispatch) => {
     return axios
@@ -33,12 +38,23 @@ export const getPosts = (num) => {
   };
 };
 
+/**
+ *
+ * @param {object} data
+ * @returns posts the new post onto the database
+ */
 export const addPost = (data) => {
   return (dispatch) => {
     return axios.post(`${process.env.REACT_APP_API_URL}api/post`, data);
   };
 };
 
+/**
+ *
+ * @param {string} postId
+ * @param {string} userId
+ * @returns this function is in work in progress, not functioning yet
+ */
 export const likePost = (postId, userId) => {
   return (dispatch) => {
     return axios({
@@ -53,6 +69,12 @@ export const likePost = (postId, userId) => {
   };
 };
 
+/**
+ *
+ * @param {string} postId
+ * @param {string} userId
+ * @returns this function is in work in progress, not functioning yet
+ */
 export const unlikePost = (postId, userId) => {
   return (dispatch) => {
     return axios({
@@ -67,6 +89,12 @@ export const unlikePost = (postId, userId) => {
   };
 };
 
+/**
+ *
+ * @param {string} postId
+ * @param {string} message
+ * @returns the updated post message
+ */
 export const updatePost = (postId, message) => {
   return (dispatch) => {
     return axios({
@@ -81,6 +109,11 @@ export const updatePost = (postId, message) => {
   };
 };
 
+/**
+ *
+ * @param {string} postId
+ * @returns deletes the concerned post
+ */
 export const deletePost = (postId) => {
   return (dispatch) => {
     return axios({
@@ -94,6 +127,14 @@ export const deletePost = (postId) => {
   };
 };
 
+/**
+ *
+ * @param {string} postId
+ * @param {string} commentatorId
+ * @param {string} text
+ * @param {string} commentatorPseudo
+ * @returns adds a comment to a post
+ */
 export const addComment = (postId, commentatorId, text, commentatorPseudo) => {
   return (dispatch) => {
     return axios({
@@ -108,6 +149,13 @@ export const addComment = (postId, commentatorId, text, commentatorPseudo) => {
   };
 };
 
+/**
+ *
+ * @param {string} postId
+ * @param {string} commentId
+ * @param {string} text
+ * @returns edits a comment
+ */
 export const editComment = (postId, commentId, text) => {
   return (dispatch) => {
     return axios({
@@ -122,6 +170,12 @@ export const editComment = (postId, commentId, text) => {
   };
 };
 
+/**
+ *
+ * @param {string} postId
+ * @param {string} commentId
+ * @returns deletes a comment
+ */
 export const deleteComment = (postId, commentId) => {
   return (dispatch) => {
     return axios({
@@ -136,6 +190,11 @@ export const deleteComment = (postId, commentId) => {
   };
 };
 
+/**
+ *
+ * @param {array} sortedArray
+ * @returns gets trendy posts (most liked)
+ */
 export const getTrends = (sortedArray) => {
   return (dispatch) => {
     dispatch({ type: GET_TRENDS, payload: sortedArray });

@@ -5,12 +5,17 @@ import { isEmpty } from "./Utils";
 import { NavLink } from "react-router-dom";
 
 const Trends = () => {
+  //redux gets the posts, trends and users state
+
   const posts = useSelector((state) => state.allPostsReducer);
   const usersData = useSelector((state) => state.usersReducer);
   const trendList = useSelector((state) => state.trendingReducer);
 
+  //importing dispatch
   const dispatch = useDispatch();
 
+  //sorting most trendy posts by amount of likes
+  //useEffect so that the trending list updates when likes go up
   useEffect(() => {
     if (!isEmpty(posts[0])) {
       const postArr = Object.keys(posts).map((i) => posts[i]);

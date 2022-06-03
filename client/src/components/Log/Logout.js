@@ -2,11 +2,14 @@ import axios from "axios";
 import cookie from "js-cookie";
 
 const Logout = () => {
+  //function to remove cookie when logging out
   const removeCookie = (key) => {
     if (window !== undefined) {
       cookie.remove(key, { expires: 1 });
     }
   };
+
+  //function to GET/remove the cookie from the user when logging out
   const logout = async () => {
     await axios({
       method: "GET",

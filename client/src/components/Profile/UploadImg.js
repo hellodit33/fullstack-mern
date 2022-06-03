@@ -3,10 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { uploadPicture } from "../../actions/user.actions";
 
 const UploadImg = () => {
+  //file state for the upload file - does not work on heroku
   const [file, setFile] = useState();
+
+  //importing dispatch for the redux store
   const dispatch = useDispatch();
+
+  //redux gets the user data state
   const userData = useSelector((state) => state.userReducer);
 
+  /**
+   *
+   * @desc handlePicture dispatches the user profile picture into the database through multer - this does not work on Heroku so it is commented out
+   */
   const handlePicture = async (e) => {
     e.preventDefault();
     const data = new FormData();

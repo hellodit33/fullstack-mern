@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/src/actions/user.actions.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/src/actions/user.actions.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from "axios";
+
+export const GET_USER = "GET_USER";
+export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
+export const UPDATE_BIO = "UPDATE_BIO";
+export const UPDATE_PLATFORMS = "UPDATE_PLATFORMS";
+export const UPDATE_STREAMING_PATTERN = "UPDATE_STREAMING_PATTERN";
+export const UPDATE_MOOD = "UPDATE_MOOD";
+export const UPDATE_RENT = "UPDATE_RENT";
+export const UPDATE_GENRES = "UPDATE_GENRES";
+export const UPDATE_COGENRES = "UPDATE_COGENRES";
+export const UPDATE_INTERESTS = "UPDATE_INTERESTS";
+export const UPDATE_COWATCHING = "UPDATE_COWATCHING";
+export const UPDATE_GENDER = "UPDATE_GENDER";
+export const UPDATE_YEAR_BORN = "UPDATE_YEAR_BORN";
+
+export const FOLLOW_USER = "FOLLOW_USER";
+export const UNFOLLOW_USER = "UNFOLLOW_USER";
+
+export const GET_USER_ERRORS = "GET_USER_ERRORS";
+
+/**
+ *
+ * @param {string} uid
+ * @returns the user data
+ *
+ */
+export const getUser = (uid) => {
+  return (dispatch) => {
+    return axios
+      .get(`${process.env.REACT_APP_API_URL}api/user/${uid}`)
+      .then((res) => {
+        dispatch({ type: GET_USER, payload: res.data });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+/**
+ *
+ * @param {object} data
+ * @param {string} id
+ * @returns posts the uploaded user picture (not working on Heroku)
+ */
+export const uploadPicture = (data, id) => {
+  return (dispatch) => {
+    return axios
+      .post(`${process.env.REACT_APP_API_URL}api/user/upload`, data)
+      .then((res) => {
+        if (res.data.errors) {
+          dispatch({ type: GET_USER_ERRORS, payload: res.data.errors });
+        } else {
+          dispatch({ type: GET_USER_ERRORS, payload: "" });
+          return axios
+            .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
+            .then((res) => {
+              dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
+            });
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+/**
+ *
+ * @param {string} userId
+ * @param {string} bio
+ * @returns the updated bio
+ */
+export const updateBio = (userId, bio) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { bio },
+    })
+      .then((res) => {
+        dispatch({ type: UPDATE_BIO, payload: bio });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+/**
+ *
+ * @param {string} userId
+ * @param {array} platforms
+ * @returns the updated platforms array
+ */
+export const updatePlatforms = (userId, platforms) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { platforms },
+    })
+      .then((res) => {
+        dispatch({ type: UPDATE_PLATFORMS, payload: platforms });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+/**
+ *
+ * @param {string} userId
+ * @param {array} streamingPattern
+ * @returns the streaming pattern array
+ */
+export const updateStreamingPatterns = (userId, streamingPattern) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { streamingPattern },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_STREAMING_PATTERN,
+          payload: streamingPattern,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+/**
+ *
+ * @param {string} userId
+ * @param {string} mood
+ * @returns the updated user's mood
+ */
+export const updateMood = (userId, mood) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { mood },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_MOOD,
+          payload: mood,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+/**
+ *
+ * @param {string} userId
+ * @param {string} rent
+ * @returns the rent value - yes or no
+ */
+export const updateRent = (userId, rent) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { rent },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_RENT,
+          payload: rent,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+/**
+ *
+ * @param {string} userId
+ * @param {array} genres
+ * @returns the updated genres array
+ */
+export const updateGenres = (userId, genres) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { genres },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_GENRES,
+          payload: genres,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+/**
+ *
+ * @param {string} userId
+ * @param {array} cogenres
+ * @returns the updated co-genres array
+ */
+export const updateCoGenres = (userId, cogenres) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { cogenres },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_COGENRES,
+          payload: cogenres,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+/**
+ *
+ * @param {string} userId
+ * @param {array} interests
+ * @returns the updated interests array
+ */
+export const updateInterests = (userId, interests) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { interests },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_INTERESTS,
+          payload: interests,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+/**
+ *
+ * @param {string} userId
+ * @param {boolean} cowatching
+ * @returns the updated cowatching boolean
+ */
+export const updateCoWatching = (userId, cowatching) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { cowatching },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_COWATCHING,
+          payload: cowatching,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+/**
+ *
+ * @param {string} userId
+ * @param {string} gender
+ * @returns the updated gender
+ */
+export const updateGender = (userId, gender) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { gender },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_GENDER,
+          payload: gender,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+/**
+ *
+ * @param {string} userId
+ * @param {string} yearBorn
+ * @returns the updated year born
+ */
+export const updateYearBorn = (userId, yearBorn) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      data: { yearBorn },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_YEAR_BORN,
+          payload: yearBorn,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+/**
+ *
+ * @param {string} followerId
+ * @param {string} idToFollow
+ * @returns the id to follow
+ */
+export const followUser = (followerId, idToFollow) => {
+  return (dispatch) => {
+    return axios({
+      method: "patch",
+      url: `${process.env.REACT_APP_API_URL}api/user/follow/` + followerId,
+      data: { idToFollow },
+    })
+      .then((res) => {
+        dispatch({ type: FOLLOW_USER, payload: { idToFollow } });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+/**
+ *
+ * @param {string} followerId
+ * @param {string} idToUnfollow
+ * @returns the id to unfollow
+ */
+export const unfollowUser = (followerId, idToUnfollow) => {
+  return (dispatch) => {
+    return axios({
+      method: "patch",
+      url: `${process.env.REACT_APP_API_URL}api/user/unfollow/` + followerId,
+      data: { idToUnfollow },
+    })
+      .then((res) => {
+        dispatch({ type: UNFOLLOW_USER, payload: { idToUnfollow } });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Welcome</a></h2><h3>Modules</h3><ul><li><a href="module-reducers.html">reducers</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addComment">addComment</a></li><li><a href="global.html#addPost">addPost</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#buildNav">buildNav</a></li><li><a href="global.html#checkUser">checkUser</a></li><li><a href="global.html#commentPost">commentPost</a></li><li><a href="global.html#cookieParser">cookieParser</a></li><li><a href="global.html#cors">cors</a></li><li><a href="global.html#corsOptions">corsOptions</a></li><li><a href="global.html#createPost">createPost</a></li><li><a href="global.html#dateParser">dateParser</a></li><li><a href="global.html#deleteComment">deleteComment</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#deletePostComment">deletePostComment</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#editComment">editComment</a></li><li><a href="global.html#editPostComment">editPostComment</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#follow">follow</a></li><li><a href="global.html#followUser">followUser</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getHint">getHint</a></li><li><a href="global.html#getPosts">getPosts</a></li><li><a href="global.html#getTrends">getTrends</a></li><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#getUsers">getUsers</a></li><li><a href="global.html#isEmpty">isEmpty</a></li><li><a href="global.html#likePost">likePost</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#maxAge">maxAge</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#publish">publish</a></li><li><a href="global.html#readPost">readPost</a></li><li><a href="global.html#signIn">signIn</a></li><li><a href="global.html#signInErrors">signInErrors</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#signUpErrors">signUpErrors</a></li><li><a href="global.html#timestampParser">timestampParser</a></li><li><a href="global.html#unfollow">unfollow</a></li><li><a href="global.html#unfollowUser">unfollowUser</a></li><li><a href="global.html#unlikePost">unlikePost</a></li><li><a href="global.html#updateBio">updateBio</a></li><li><a href="global.html#updateCoGenres">updateCoGenres</a></li><li><a href="global.html#updateCoWatching">updateCoWatching</a></li><li><a href="global.html#updateGender">updateGender</a></li><li><a href="global.html#updateGenres">updateGenres</a></li><li><a href="global.html#updateInterests">updateInterests</a></li><li><a href="global.html#updateMood">updateMood</a></li><li><a href="global.html#updatePlatforms">updatePlatforms</a></li><li><a href="global.html#updatePost">updatePost</a></li><li><a href="global.html#updateRent">updateRent</a></li><li><a href="global.html#updateStreamingPatterns">updateStreamingPatterns</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateYearBorn">updateYearBorn</a></li><li><a href="global.html#uploadErrors">uploadErrors</a></li><li><a href="global.html#uploadPicture">uploadPicture</a></li><li><a href="global.html#uploadProfile">uploadProfile</a></li><li><a href="global.html#userInfo">userInfo</a></li><li><a href="global.html#userRoutes">userRoutes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Jun 03 2022 23:36:43 GMT+0200 (centraleuropeisk sommartid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

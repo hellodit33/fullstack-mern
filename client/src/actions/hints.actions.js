@@ -3,6 +3,11 @@ import axios from "axios";
 export const GET_HINT = "GET_HINT";
 export const GET_ALL_HINTS = "GET_ALL_HINTS";
 
+/**
+ *
+ * @param {string} num
+ * @returns gets a slice of hints
+ */
 export const getHint = (num) => {
   return (dispatch) => {
     return axios

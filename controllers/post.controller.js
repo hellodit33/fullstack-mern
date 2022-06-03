@@ -1,12 +1,18 @@
+//post controller requirements
 const postModel = require("../models/post.model");
 const PostModel = require("../models/post.model");
 const UserModel = require("../models/user.model");
 const { uploadErrors } = require("../utils/errors.utils");
 const ObjectID = require("mongoose").Types.ObjectId;
+//fs, promisify and pipeline don't work know because the upload image function does not work on Heroku
 const fs = require("fs");
 const { promisify } = require("util");
 const pipeline = promisify(require("stream").pipeline);
 
+/**
+ *
+ * @desc readPost shows all posts to the users, from latest to oldest
+ */
 module.exports.readPost = (req, res) => {
   PostModel.find((err, data) => {
     if (!err) res.send(data);
@@ -15,6 +21,12 @@ module.exports.readPost = (req, res) => {
   }).sort({ createdAt: -1 });
 };
 
+/**
+ *
+ * @param {*} req
+ * @param {*} res
+ * @returns either error if image upload did not work (the upload button is deactivated on the front end because of heroku), either the new post on the feed, or an error because saving the post did not work
+ */
 module.exports.createPost = async (req, res) => {
   let fileName;
 
@@ -41,6 +53,10 @@ module.exports.createPost = async (req, res) => {
     );
   }
 
+  /**
+   * @desc newPost takes the parameters available for making a new post, posterId is required as well as message
+   * @desc picture is desactivated because of heroku
+   */
   const newPost = new postModel({
     posterId: req.body.posterId,
     message: req.body.message,
@@ -53,9 +69,16 @@ module.exports.createPost = async (req, res) => {
     const post = await newPost.save();
     return res.status(201).json(post);
   } catch (err) {
-    return res.status(400).send("error 600");
+    return res.status(400).send("new error");
   }
 };
+
+/**
+ *
+ * @param {json} req
+ * @param {json} res
+ * @returns verifies if user can update, and then looks for content in request body and update the post
+ */
 
 module.exports.updatePost = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
@@ -75,6 +98,12 @@ module.exports.updatePost = (req, res) => {
   );
 };
 
+/**
+ *
+ * @param {json} req
+ * @param {json} res
+ * @returns verifies if user can update and then deletes the post from db
+ */
 module.exports.deletePost = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send("ID unknown: " + req.params.id);
@@ -85,6 +114,7 @@ module.exports.deletePost = (req, res) => {
   });
 };
 
+//these like and unlike function are in work in progress
 module.exports.likePost = async (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send("ID unknown : " + req.params.id);
@@ -146,6 +176,12 @@ module.exports.unlikePost = (req, res) => {
   }
 };
 
+/**
+ *
+ * @param {json} req
+ * @param {json} res
+ * @returns error if user cannot comment because not connected, or comment if user can comment
+ */
 module.exports.commentPost = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send("ID unknown : " + req.params.id);
@@ -174,6 +210,12 @@ module.exports.commentPost = (req, res) => {
   }
 };
 
+/**
+ *
+ * @param {json} req
+ * @param {json} res
+ * @returns edited comment if the user has the right to comment, and if the comment exist (right id)
+ */
 module.exports.editPostComment = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send("ID unknown : " + req.params.id);
@@ -197,6 +239,12 @@ module.exports.editPostComment = (req, res) => {
   }
 };
 
+/**
+ *
+ * @param {json} req
+ * @param {json} res
+ * @returns deletes comment if the user has the right to delete the comment
+ */
 module.exports.deletePostComment = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send("ID unknown : " + req.params.id);

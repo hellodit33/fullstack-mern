@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/src/components/Post/Card.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/src/components/Post/Card.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updatePost } from "../../actions/post.actions";
+import FollowHandler from "../Profile/FollowHandler";
+import { dateParser, isEmpty } from "../Utils";
+import CardComments from "./CardComments";
+import DeleteCard from "./DeleteCard";
+import LikeButton from "./LikeButton";
+
+const Card = ({ post }) => {
+  //state for the loading icon
+  const [isLoading, setIsLoading] = useState(true);
+
+  //state for the updates
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [textUpdate, setTextUpdate] = useState(null);
+
+  //state for showing comments
+  const [showComments, setShowComments] = useState(false);
+
+  //redux gets the user data and the users data state
+  const usersData = useSelector((state) => state.usersReducer);
+  const userData = useSelector((state) => state.userReducer);
+
+  //import dispatch for the redux store
+  const dispatch = useDispatch();
+
+  /**
+   * @desc updateItem updates the post
+   */
+  const updateItem = () => {
+    if (textUpdate) {
+      dispatch(updatePost(post._id, textUpdate));
+    }
+    setIsUpdated(false);
+  };
+
+  //isLoading disappears when userData appears, if it's not empty
+  useEffect(() => {
+    !isEmpty(usersData[0]) &amp;&amp; setIsLoading(false);
+  }, [usersData]);
+
+  return (
+    &lt;li className="card-container" key={post._id}>
+      {isLoading ? (
+        &lt;i className="fa-solid fa-spinner">&lt;/i>
+      ) : (
+        &lt;>
+          &lt;div className="card-left">
+            &lt;img
+              src={
+                !isEmpty(usersData[0]) &amp;&amp;
+                usersData
+                  .map((user) => {
+                    if (user._id === post.posterId) return user.picture;
+                    else return null;
+                  })
+                  .join("")
+              }
+              alt="poster-pic"
+            />
+          &lt;/div>
+          &lt;div className="card-right">
+            &lt;div className="card-header">
+              &lt;div className="pseudo">
+                &lt;h3>
+                  {!isEmpty(usersData[0]) &amp;&amp;
+                    usersData
+                      .map((user) => {
+                        if (user._id === post.posterId) return user.pseudo;
+                        else return null;
+                      })
+                      .join("")}
+                &lt;/h3>
+                {post.posterId !== userData._id &amp;&amp; (
+                  &lt;FollowHandler idToFollow={post.posterId} type={"card"} />
+                )}
+                &lt;div>&lt;/div>
+              &lt;/div>
+              &lt;span>{dateParser(post.createdAt)}&lt;/span>
+            &lt;/div>
+            {isUpdated === false &amp;&amp; &lt;p>{post.message}&lt;/p>}
+            {isUpdated &amp;&amp; (
+              &lt;div className="update-post">
+                &lt;textarea
+                  defaultValue={post.message}
+                  onChange={(e) => setTextUpdate(e.target.value)}
+                >&lt;/textarea>
+                &lt;div className="button-container">
+                  &lt;button className="btn" onClick={updateItem}>
+                    Send
+                  &lt;/button>
+                &lt;/div>
+              &lt;/div>
+            )}
+            {post.picture &amp;&amp; (
+              &lt;img src={post.picture} alt="card-pic" className="card-pic">&lt;/img>
+            )}
+            {post.video &amp;&amp; (
+              &lt;iframe
+                width="500"
+                height="300"
+                src={post.video}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title={post._id}
+              >&lt;/iframe>
+            )}
+            {userData._id === post.posterId &amp;&amp; (
+              &lt;div className="button-container">
+                &lt;div onClick={() => setIsUpdated(!isUpdated)}>
+                  &lt;i className="fa-solid fa-pen-to-square">&lt;/i>
+                &lt;/div>
+                &lt;DeleteCard id={post._id} />
+              &lt;/div>
+            )}
+            &lt;div className="card-footer">
+              &lt;div className="comment-icon">
+                &lt;i
+                  className="fa-solid fa-comment"
+                  /* this button shows and hides comments on clicks */
+                  onClick={() => setShowComments(!showComments)}
+                >&lt;/i>
+                &lt;span>{post.comments.length}&lt;/span>
+              &lt;/div>
+              &lt;LikeButton />
+              &lt;i className="fa-solid fa-share">&lt;/i>
+            &lt;/div>
+            {showComments &amp;&amp; &lt;CardComments post={post} />}
+          &lt;/div>
+        &lt;/>
+      )}
+    &lt;/li>
+  );
+};
+
+export default Card;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Welcome</a></h2><h3>Modules</h3><ul><li><a href="module-reducers.html">reducers</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addComment">addComment</a></li><li><a href="global.html#addPost">addPost</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#buildNav">buildNav</a></li><li><a href="global.html#checkUser">checkUser</a></li><li><a href="global.html#commentPost">commentPost</a></li><li><a href="global.html#cookieParser">cookieParser</a></li><li><a href="global.html#cors">cors</a></li><li><a href="global.html#corsOptions">corsOptions</a></li><li><a href="global.html#createPost">createPost</a></li><li><a href="global.html#dateParser">dateParser</a></li><li><a href="global.html#deleteComment">deleteComment</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#deletePostComment">deletePostComment</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#editComment">editComment</a></li><li><a href="global.html#editPostComment">editPostComment</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#follow">follow</a></li><li><a href="global.html#followUser">followUser</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getHint">getHint</a></li><li><a href="global.html#getPosts">getPosts</a></li><li><a href="global.html#getTrends">getTrends</a></li><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#getUsers">getUsers</a></li><li><a href="global.html#isEmpty">isEmpty</a></li><li><a href="global.html#likePost">likePost</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#maxAge">maxAge</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#publish">publish</a></li><li><a href="global.html#readPost">readPost</a></li><li><a href="global.html#signIn">signIn</a></li><li><a href="global.html#signInErrors">signInErrors</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#signUpErrors">signUpErrors</a></li><li><a href="global.html#timestampParser">timestampParser</a></li><li><a href="global.html#unfollow">unfollow</a></li><li><a href="global.html#unfollowUser">unfollowUser</a></li><li><a href="global.html#unlikePost">unlikePost</a></li><li><a href="global.html#updateBio">updateBio</a></li><li><a href="global.html#updateCoGenres">updateCoGenres</a></li><li><a href="global.html#updateCoWatching">updateCoWatching</a></li><li><a href="global.html#updateGender">updateGender</a></li><li><a href="global.html#updateGenres">updateGenres</a></li><li><a href="global.html#updateInterests">updateInterests</a></li><li><a href="global.html#updateMood">updateMood</a></li><li><a href="global.html#updatePlatforms">updatePlatforms</a></li><li><a href="global.html#updatePost">updatePost</a></li><li><a href="global.html#updateRent">updateRent</a></li><li><a href="global.html#updateStreamingPatterns">updateStreamingPatterns</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateYearBorn">updateYearBorn</a></li><li><a href="global.html#uploadErrors">uploadErrors</a></li><li><a href="global.html#uploadPicture">uploadPicture</a></li><li><a href="global.html#uploadProfile">uploadProfile</a></li><li><a href="global.html#userInfo">userInfo</a></li><li><a href="global.html#userRoutes">userRoutes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Jun 03 2022 23:36:43 GMT+0200 (centraleuropeisk sommartid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

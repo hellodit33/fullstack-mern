@@ -9,6 +9,7 @@ function App() {
   const [uid, setUid] = useState(null);
   const dispatch = useDispatch();
 
+  //the token is the uid so that we can identify the user in Context
   useEffect(() => {
     const fetchToken = async () => {
       await axios({

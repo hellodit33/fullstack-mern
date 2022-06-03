@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+//Create schema and model for posts
 const PostSchema = new mongoose.Schema(
   {
     posterId: {
@@ -11,12 +12,14 @@ const PostSchema = new mongoose.Schema(
       trim: true,
       maxlength: 500,
     },
+    //the picture upload is not available on heroku
     picture: {
       type: String,
     },
     video: {
       type: String,
     },
+    //the like function is still in work in progress
     likers: {
       type: [String],
       required: true,

@@ -5,6 +5,7 @@ import "reactjs-popup/dist/index.css";
 import { useDispatch } from "react-redux";
 import { likePost, unlikePost } from "../../actions/post.actions";
 
+//the like function is in work in progress, not functioning yet
 const LikeButton = ({ post }) => {
   const [liked, setLiked] = useState(false);
   const uid = useContext(UidContext);

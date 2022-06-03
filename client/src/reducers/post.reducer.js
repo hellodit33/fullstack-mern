@@ -8,8 +8,15 @@ import {
   DELETE_COMMENT,
 } from "../actions/post.actions";
 
+//Setting the initial state
 const initialState = {};
 
+/**
+ *
+ * @param {object} state
+ * @param {object} action
+ * @returns the states for each action case
+ */
 export default function postReducer(state = initialState, action) {
   switch (action.type) {
     case GET_POSTS:

@@ -2,6 +2,10 @@ import axios from "axios";
 
 export const GET_USERS = "GET_USERS";
 
+/**
+ *
+ * @returns action that returns all users
+ */
 export const getUsers = () => {
   return (dispatch) => {
     return axios

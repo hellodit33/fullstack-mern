@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/src/pages/Hints.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/src/pages/Hints.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getHint } from "../actions/hints.actions";
+import { updateMood } from "../actions/user.actions";
+import LeftNav from "../components/LeftNav";
+import Search from "../components/Search";
+import Trends from "../components/Trends";
+import AOS from "aos";
+import { UidContext } from "../components/AppContext";
+import Log from "../components/Log";
+import { isEmpty } from "../components/Utils";
+
+const Hints = () => {
+  /**
+   * @desc AOS is a transition style library
+   */
+  useEffect(() => {
+    AOS.init();
+    AOS.refresh();
+  }, []);
+  const dispatch = useDispatch();
+
+  /**
+   * @desc uid is a condition for showing some info on Hints
+   */
+  const uid = useContext(UidContext);
+  //redux gets the hints state and userData state
+  const hintsList = useSelector((state) => state.hintsReducer);
+  const userData = useSelector((state) => state.userReducer);
+
+  //mood gets updated in db when user picks a mood
+  const [mood, setMood] = useState();
+
+  //the hint gets updated when mood is updated, it has to match
+  const [hint, setUpdateHint] = useState(false);
+
+  /*const [showMore, setShowMore] = useState(false);*/
+
+  //Redirect is true when hint and mood are updated
+  const [redirect, setRedirect] = useState(false);
+
+  /*console.log(hintsList);
+  console.log(userData.mood);*/
+
+  /**
+   * @desc handleMood updates the mood, while also picking a hint and redirecting
+   */
+  const handleMood = () => {
+    dispatch(updateMood(userData._id, mood));
+    setUpdateHint(true);
+    setRedirect(true);
+  };
+
+  return (
+    &lt;div className="trending-page">
+      &lt;LeftNav />
+      &lt;div className="main">
+        &lt;h1>Today's Hints&lt;/h1>
+        {/* the user can search and get a hint only when connected*/}
+        {uid ? (
+          &lt;div>
+            &lt;Search />
+
+            &lt;div className="hint-question">
+              &lt;h2>What are you up for today?&lt;/h2>
+              {/* picking a mood first */}
+              &lt;div className="group">
+                &lt;input
+                  type="radio"
+                  id="romance"
+                  name="mood"
+                  value="romance"
+                  onClick={(e) => setMood(e.target.value)}
+                />
+                &lt;label htmlFor="romance">Romance&lt;/label>
+                &lt;br />
+
+                &lt;input
+                  type="radio"
+                  value="action"
+                  id="action"
+                  name="mood"
+                  onClick={(e) => setMood(e.target.value)}
+                />
+                &lt;label htmlFor="action">Action&lt;/label>
+                &lt;br />
+
+                &lt;input
+                  type="radio"
+                  value="thriller"
+                  id="thriller"
+                  name="mood"
+                  onClick={(e) => setMood(e.target.value)}
+                />
+                &lt;label htmlFor="thriller">Thriller&lt;/label>
+                &lt;br />
+
+                &lt;input
+                  type="radio"
+                  value="comedy"
+                  id="comedy"
+                  name="mood"
+                  onClick={(e) => setMood(e.target.value)}
+                />
+                &lt;label htmlFor="comedy">Comedy&lt;/label>
+                &lt;br />
+
+                &lt;input
+                  type="radio"
+                  value="western"
+                  id="western"
+                  name="mood"
+                  onClick={(e) => setMood(e.target.value)}
+                />
+                &lt;label htmlFor="western">Western&lt;/label>
+                &lt;br />
+
+                &lt;input
+                  type="radio"
+                  value="drama"
+                  id="drama"
+                  name="mood"
+                  onClick={(e) => setMood(e.target.value)}
+                />
+                &lt;label htmlFor="drama">Drama&lt;/label>
+                &lt;br />
+
+                &lt;input
+                  type="radio"
+                  value="nature"
+                  id="nature"
+                  name="mood"
+                  onClick={(e) => setMood(e.target.value)}
+                />
+                &lt;label htmlFor="nature">Nature&lt;/label>
+                &lt;br />
+
+                &lt;input
+                  type="radio"
+                  value="musical"
+                  id="musical"
+                  name="mood"
+                  onClick={(e) => setMood(e.target.value)}
+                />
+                &lt;label htmlFor="musical">Musical&lt;/label>
+              &lt;/div>
+              &lt;br />
+              {/* sending the mood second */}
+              &lt;button onClick={handleMood}>get a hint&lt;/button>{" "}
+            &lt;/div>
+          &lt;/div>
+        ) : (
+          {
+            /* the user gets to log in if not connect */
+          }(
+            &lt;div className="log-container">
+              &lt;Log signin={true} signup={false}>&lt;/Log>
+            &lt;/div>
+          )
+        )}
+        {/* the user gets only one hint per mood */}
+        &lt;ul>
+          {hint &amp;&amp;
+            hintsList
+              .filter((hints) => hints.mood === userData.mood)
+              .slice(0, 1)
+              .map((hints) => (
+                &lt;>
+                  &lt;div
+                    data-aos="fade-up"
+                    data-aos-duration="1000"
+                    data-aos-delay="300"
+                    data-aos-offset="100"
+                  >
+                    &lt;div className="hint">
+                      &lt;h2 className="hint-title">{hints.filmTitle}&lt;/h2>
+                      &lt;p className="hint-mood">
+                        For when you're into: {hints.mood}
+                      &lt;/p>
+                      &lt;iframe
+                        src={hints.video}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        title={hints.video}
+                      >&lt;/iframe>
+                      &lt;p className="hint-synopsis">{hints.synopsis}&lt;/p>
+                      &lt;ul className="hint-platforms">
+                        {hints.platforms.map((platforms) => (
+                          &lt;>
+                            &lt;li className="hint-platform">{platforms}&lt;/li>
+                          &lt;/>
+                        ))}
+                      &lt;/ul>
+                      &lt;>&lt;/>
+                    &lt;/div>
+                  &lt;/div>
+                &lt;/>
+              ))}
+          {hint &amp;&amp;
+            isEmpty(
+              hintsList.filter((hints) => hints.mood === userData.mood)
+            ) &amp;&amp; (
+              &lt;>
+                &lt;div className="no-hint">
+                  &lt;p>
+                    {/* the user gets to know when hints are not available for their mood (only example for assignment, since it's not great for the users) */}
+
+                    &lt;i style={{ color: "white", margin: "50px" }}>
+                      Unfortunately, we don't have any {userData.mood} hint
+                      today.
+                    &lt;/i>
+                  &lt;/p>
+                &lt;/div>
+              &lt;/>
+            )}
+        &lt;/ul>
+
+        {/* when user has clicked on a mood a get another hint button appears under the hint, to go get another hint */}
+
+        {redirect &amp;&amp;
+          !isEmpty(
+            hintsList.filter((hints) => hints.mood === userData.mood)
+          ) &amp;&amp; (
+            &lt;>
+              &lt;div className="another-hint">
+                &lt;button onClick={(event) => (window.location.href = "/hints")}>
+                  get another hint
+                &lt;/button>
+              &lt;/div>
+            &lt;/>
+          )}
+      &lt;/div>
+      &lt;div className="right-side">
+        &lt;div className="right-side-container">
+          &lt;Trends />
+        &lt;/div>
+      &lt;/div>
+    &lt;/div>
+  );
+};
+
+export default Hints;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Welcome</a></h2><h3>Modules</h3><ul><li><a href="module-reducers.html">reducers</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addComment">addComment</a></li><li><a href="global.html#addPost">addPost</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#buildNav">buildNav</a></li><li><a href="global.html#checkUser">checkUser</a></li><li><a href="global.html#commentPost">commentPost</a></li><li><a href="global.html#cookieParser">cookieParser</a></li><li><a href="global.html#cors">cors</a></li><li><a href="global.html#corsOptions">corsOptions</a></li><li><a href="global.html#createPost">createPost</a></li><li><a href="global.html#dateParser">dateParser</a></li><li><a href="global.html#deleteComment">deleteComment</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#deletePostComment">deletePostComment</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#editComment">editComment</a></li><li><a href="global.html#editPostComment">editPostComment</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#follow">follow</a></li><li><a href="global.html#followUser">followUser</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getHint">getHint</a></li><li><a href="global.html#getPosts">getPosts</a></li><li><a href="global.html#getTrends">getTrends</a></li><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#getUsers">getUsers</a></li><li><a href="global.html#isEmpty">isEmpty</a></li><li><a href="global.html#likePost">likePost</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#maxAge">maxAge</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#publish">publish</a></li><li><a href="global.html#readPost">readPost</a></li><li><a href="global.html#signIn">signIn</a></li><li><a href="global.html#signInErrors">signInErrors</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#signUpErrors">signUpErrors</a></li><li><a href="global.html#timestampParser">timestampParser</a></li><li><a href="global.html#unfollow">unfollow</a></li><li><a href="global.html#unfollowUser">unfollowUser</a></li><li><a href="global.html#unlikePost">unlikePost</a></li><li><a href="global.html#updateBio">updateBio</a></li><li><a href="global.html#updateCoGenres">updateCoGenres</a></li><li><a href="global.html#updateCoWatching">updateCoWatching</a></li><li><a href="global.html#updateGender">updateGender</a></li><li><a href="global.html#updateGenres">updateGenres</a></li><li><a href="global.html#updateInterests">updateInterests</a></li><li><a href="global.html#updateMood">updateMood</a></li><li><a href="global.html#updatePlatforms">updatePlatforms</a></li><li><a href="global.html#updatePost">updatePost</a></li><li><a href="global.html#updateRent">updateRent</a></li><li><a href="global.html#updateStreamingPatterns">updateStreamingPatterns</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateYearBorn">updateYearBorn</a></li><li><a href="global.html#uploadErrors">uploadErrors</a></li><li><a href="global.html#uploadPicture">uploadPicture</a></li><li><a href="global.html#uploadProfile">uploadProfile</a></li><li><a href="global.html#userInfo">userInfo</a></li><li><a href="global.html#userRoutes">userRoutes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Jun 03 2022 23:36:43 GMT+0200 (centraleuropeisk sommartid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

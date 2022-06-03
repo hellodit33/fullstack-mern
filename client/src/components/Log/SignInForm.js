@@ -2,14 +2,21 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const SignInForm = () => {
+  //States for the sign in form
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  /**
+   *
+   * @param {string} e
+   * @desc function to handle the sign in process and send errors
+   */
   const handleLogin = (e) => {
     e.preventDefault();
+    //send errors
     const emailError = document.querySelector(".email.error");
     const passwordError = document.querySelector(".password.error");
-
+    //login the user with POST user/login
     axios({
       method: "post",
       url: `${process.env.REACT_APP_API_URL}api/user/login`,

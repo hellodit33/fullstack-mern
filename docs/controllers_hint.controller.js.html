@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: controllers/hint.controller.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: controllers/hint.controller.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//controller requirements
+const HintModel = require("../models/hint.model");
+const UserModel = require("../models/user.model");
+const { uploadErrors } = require("../utils/errors.utils");
+const ObjectID = require("mongoose").Types.ObjectId;
+
+/**
+ *
+ * @param {json} req
+ * @param {json} res
+ * @desc readPost finds all hints available in db and shows them to the user (depending on user criterias)
+ */
+module.exports.readPost = async (req, res) => {
+  const hint = await HintModel.find();
+  res.status(200).json(hint);
+};
+
+/*
+module.exports.likePost = async (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
+
+  try {
+    await HintsModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $addToSet: { likers: req.body.id },
+      },
+      { new: true }
+    )
+      .then((data) => res.send(data))
+      .catch((err) => res.status(500).send({ message: err }));
+
+    await UserModel.findByIdAndUpdate(
+      req.body.id,
+      {
+        $addToSet: { likes: req.params.id },
+      },
+      { new: true }
+    )
+      .then((data) => res.send(data))
+      .catch((err) => res.status(500).send({ message: err }));
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+};
+*/
+
+/*
+
+module.exports.unlikePost = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
+
+  try {
+    HintsModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $pull: { likers: req.body.id },
+      },
+      { new: true },
+      (err, data) => {
+        if (err) return res.status(400).send(err);
+      }
+    );
+    UserModel.findByIdAndUpdate(
+      req.body.id,
+      {
+        //pull the like so that we can unlike
+        $pull: { likes: req.params.id },
+      },
+      { new: true },
+      (err, data) => {
+        if (!err) res.send(data);
+        else return res.status(400).send(err);
+      }
+    );
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+};
+*/
+
+/*
+module.exports.commentPost = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
+
+  try {
+    return HintsModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: {
+          comments: {
+            commentatorId: req.body.commentatorId,
+            commentatorPseudo: req.body.commentatorPseudo,
+            text: req.body.text,
+            timestamp: new Date().getTime(),
+          },
+        },
+      },
+      { new: true },
+      (err, data) => {
+        if (!err) return res.send(data);
+        else return res.status(400).send(err);
+      }
+    );
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+};
+*/
+
+/*
+
+module.exports.editPostComment = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
+
+  try {
+    return HintsModel.findById(req.params.id, (err, data) => {
+      const theComment = data.comments.find((comment) =>
+        comment._id.equals(req.body.commentId)
+      );
+
+      if (!theComment) return res.status(404).send("Comment not found");
+      theComment.text = req.body.text;
+
+      return data.save((err) => {
+        if (!err) return res.status(200).send(data);
+        return res.status(500).send(err);
+      });
+    });
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+};
+*/
+/*
+module.exports.deletePostComment = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
+
+  try {
+    return HintsModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $pull: {
+          comments: {
+            _id: req.body.commentId,
+          },
+        },
+      },
+      { new: true },
+      (err, data) => {
+        if (!err) return res.send(data);
+        else return res.status(400).send(err);
+      }
+    );
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+  
+};
+*/
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Welcome</a></h2><h3>Modules</h3><ul><li><a href="module-reducers.html">reducers</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addComment">addComment</a></li><li><a href="global.html#addPost">addPost</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#buildNav">buildNav</a></li><li><a href="global.html#checkUser">checkUser</a></li><li><a href="global.html#commentPost">commentPost</a></li><li><a href="global.html#cookieParser">cookieParser</a></li><li><a href="global.html#cors">cors</a></li><li><a href="global.html#corsOptions">corsOptions</a></li><li><a href="global.html#createPost">createPost</a></li><li><a href="global.html#dateParser">dateParser</a></li><li><a href="global.html#deleteComment">deleteComment</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#deletePostComment">deletePostComment</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#editComment">editComment</a></li><li><a href="global.html#editPostComment">editPostComment</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#follow">follow</a></li><li><a href="global.html#followUser">followUser</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getHint">getHint</a></li><li><a href="global.html#getPosts">getPosts</a></li><li><a href="global.html#getTrends">getTrends</a></li><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#getUsers">getUsers</a></li><li><a href="global.html#isEmpty">isEmpty</a></li><li><a href="global.html#likePost">likePost</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#maxAge">maxAge</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#publish">publish</a></li><li><a href="global.html#readPost">readPost</a></li><li><a href="global.html#signIn">signIn</a></li><li><a href="global.html#signInErrors">signInErrors</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#signUpErrors">signUpErrors</a></li><li><a href="global.html#timestampParser">timestampParser</a></li><li><a href="global.html#unfollow">unfollow</a></li><li><a href="global.html#unfollowUser">unfollowUser</a></li><li><a href="global.html#unlikePost">unlikePost</a></li><li><a href="global.html#updateBio">updateBio</a></li><li><a href="global.html#updateCoGenres">updateCoGenres</a></li><li><a href="global.html#updateCoWatching">updateCoWatching</a></li><li><a href="global.html#updateGender">updateGender</a></li><li><a href="global.html#updateGenres">updateGenres</a></li><li><a href="global.html#updateInterests">updateInterests</a></li><li><a href="global.html#updateMood">updateMood</a></li><li><a href="global.html#updatePlatforms">updatePlatforms</a></li><li><a href="global.html#updatePost">updatePost</a></li><li><a href="global.html#updateRent">updateRent</a></li><li><a href="global.html#updateStreamingPatterns">updateStreamingPatterns</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateYearBorn">updateYearBorn</a></li><li><a href="global.html#uploadErrors">uploadErrors</a></li><li><a href="global.html#uploadPicture">uploadPicture</a></li><li><a href="global.html#uploadProfile">uploadProfile</a></li><li><a href="global.html#userInfo">userInfo</a></li><li><a href="global.html#userRoutes">userRoutes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Jun 03 2022 23:36:43 GMT+0200 (centraleuropeisk sommartid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

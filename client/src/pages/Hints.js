@@ -12,24 +12,40 @@ import Log from "../components/Log";
 import { isEmpty } from "../components/Utils";
 
 const Hints = () => {
+  /**
+   * @desc AOS is a transition style library
+   */
   useEffect(() => {
     AOS.init();
     AOS.refresh();
   }, []);
+  const dispatch = useDispatch();
 
+  /**
+   * @desc uid is a condition for showing some info on Hints
+   */
   const uid = useContext(UidContext);
+  //redux gets the hints state and userData state
   const hintsList = useSelector((state) => state.hintsReducer);
   const userData = useSelector((state) => state.userReducer);
-  const [mood, setMood] = useState();
-  const [hint, setUpdateHint] = useState(false);
-  const [showMore, setShowMore] = useState(false);
 
+  //mood gets updated in db when user picks a mood
+  const [mood, setMood] = useState();
+
+  //the hint gets updated when mood is updated, it has to match
+  const [hint, setUpdateHint] = useState(false);
+
+  /*const [showMore, setShowMore] = useState(false);*/
+
+  //Redirect is true when hint and mood are updated
   const [redirect, setRedirect] = useState(false);
 
-  const dispatch = useDispatch();
-  console.log(hintsList);
-  console.log(userData.mood);
+  /*console.log(hintsList);
+  console.log(userData.mood);*/
 
+  /**
+   * @desc handleMood updates the mood, while also picking a hint and redirecting
+   */
   const handleMood = () => {
     dispatch(updateMood(userData._id, mood));
     setUpdateHint(true);
@@ -41,13 +57,14 @@ const Hints = () => {
       <LeftNav />
       <div className="main">
         <h1>Today's Hints</h1>
-
+        {/* the user can search and get a hint only when connected*/}
         {uid ? (
           <div>
             <Search />
 
             <div className="hint-question">
               <h2>What are you up for today?</h2>
+              {/* picking a mood first */}
               <div className="group">
                 <input
                   type="radio"
@@ -129,28 +146,20 @@ const Hints = () => {
                 <label htmlFor="musical">Musical</label>
               </div>
               <br />
+              {/* sending the mood second */}
               <button onClick={handleMood}>get a hint</button>{" "}
             </div>
           </div>
         ) : (
-          <div className="log-container">
-            <Log signin={true} signup={false}></Log>
-          </div>
+          {
+            /* the user gets to log in if not connect */
+          }(
+            <div className="log-container">
+              <Log signin={true} signup={false}></Log>
+            </div>
+          )
         )}
-
-        {/*  {!isEmpty(hintsList[0]) &&
-            hintsList.map((hint) => <h1>{hint.filmTitle}</h1>)} //
-             {hintsList.map((hints) => {
-            if (userData.mood === hints.mood) {
-              <Card post={hints} key={hints._id} />;
-            } else return null;
-          })}
-          
-              {hintsList
-            .filter((hints) => hints.mood === userData.mood)
-            .map((hints) => (
-              <h1>{hints.filmTitle}</h1>
-            ))}*/}
+        {/* the user gets only one hint per mood */}
         <ul>
           {hint &&
             hintsList
@@ -196,6 +205,8 @@ const Hints = () => {
               <>
                 <div className="no-hint">
                   <p>
+                    {/* the user gets to know when hints are not available for their mood (only example for assignment, since it's not great for the users) */}
+
                     <i style={{ color: "white", margin: "50px" }}>
                       Unfortunately, we don't have any {userData.mood} hint
                       today.
@@ -205,6 +216,8 @@ const Hints = () => {
               </>
             )}
         </ul>
+
+        {/* when user has clicked on a mood a get another hint button appears under the hint, to go get another hint */}
 
         {redirect &&
           !isEmpty(

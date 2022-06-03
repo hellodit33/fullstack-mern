@@ -17,8 +17,8 @@ import {
   updateYearBorn,
 } from "../../actions/user.actions";
 
-import { isEmpty } from "../Utils";
-import { trusted } from "mongoose";
+/*import { isEmpty } from "../Utils";
+import { trusted } from "mongoose";*/
 
 const Onboarding = () => {
   useEffect(() => {
@@ -26,10 +26,13 @@ const Onboarding = () => {
     AOS.refresh();
   }, []);
 
+  //onboarding starts
   const [first, setFirst] = useState(true);
 
+  //first step
   const [next1, setNext1] = useState(false);
 
+  //second step etc
   const [next2, setNext2] = useState(false);
 
   const [rent2, setRent2] = useState(false);
@@ -50,8 +53,6 @@ const Onboarding = () => {
 
   const [next8, setNext8] = useState(false);
 
-  const [yearBorn, setYearBorn] = useState();
-
   const [platforms, setPlatforms] = useState([]);
   const [rent, setRent] = useState(null);
   const [streamingpattern, setStreamingPattern] = useState([]);
@@ -61,11 +62,15 @@ const Onboarding = () => {
   const [cowatching, setCoWatching] = useState();
   const [gender, setGender] = useState();
 
+  //Redux gets the user data, users data and error data state
   const userData = useSelector((state) => state.userReducer);
   const usersData = useSelector((state) => state.usersReducer);
   const error = useSelector((state) => state.errorReducer.userError);
+
+  //importing dispatch for the redux store
   const dispatch = useDispatch();
 
+  //the coming functions works the following way: when a question is answered, the info is dispatched to the userdata store, the present question becomes false so that it disappears forever and the following question becomes true so that it appears, and so on
   const startOnboarding = () => {
     setNext1(true);
     setFirst(false);
@@ -136,6 +141,7 @@ const Onboarding = () => {
 
   const [checked, setChecked] = useState(true);
 
+  //Function to generate years for age question
   const generateYearOptions = () => {
     const arr = [];
 
@@ -161,6 +167,7 @@ const Onboarding = () => {
                 data-aos-delay="300"
                 data-aos-offset="500"
               >
+                {/*first step*/}
                 <h1>The Streaming World is anything but small, right?</h1>
               </div>
               <div
@@ -208,6 +215,7 @@ const Onboarding = () => {
               </div>
             </div>
           )}
+          {/*second step */}
 
           {next1 && (
             <>
@@ -354,6 +362,8 @@ const Onboarding = () => {
             </>
           )}
 
+          {/*third step*/}
+
           {!next1 && next2 && (
             <>
               <div className="rent">
@@ -373,6 +383,8 @@ const Onboarding = () => {
               </div>
             </>
           )}
+
+          {/*fourth step*/}
 
           {!first && !next2 && !next3 && rent && rent2 && (
             <>
@@ -665,6 +677,8 @@ const Onboarding = () => {
             </>
           )}
 
+          {/*fifth step*/}
+
           {!first && !next2 && !next3 && rent && next4 && !rent2 && (
             <>
               <div className="co-genres">
@@ -844,6 +858,8 @@ const Onboarding = () => {
               </div>
             </>
           )}
+
+          {/*sixth step*/}
 
           {!next4 && next5 && (
             <>
@@ -1032,6 +1048,8 @@ const Onboarding = () => {
             </>
           )}
 
+          {/*seventh step*/}
+
           {!next5 && next6 && cowatch2 && (
             <>
               <div className="co-watching">
@@ -1054,6 +1072,7 @@ const Onboarding = () => {
               </div>
             </>
           )}
+          {/*eightth step */}
 
           {!next3 &&
             !next4 &&
@@ -1090,6 +1109,8 @@ const Onboarding = () => {
               </>
             )}
 
+          {/*nineth step*/}
+
           {!next3 &&
             !next4 &&
             !next5 &&
@@ -1116,6 +1137,7 @@ const Onboarding = () => {
                 <br />
                 <br />
                 <button onClick={(event) => (window.location.href = "/hints")}>
+                  {/*taking the user back to the hint page*/}
                   now, go get a hint
                 </button>
               </div>

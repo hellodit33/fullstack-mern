@@ -4,12 +4,20 @@ import { isEmpty } from "../Utils";
 import FollowHandler from "./FollowHandler";
 
 const FriendsHint = () => {
+  //Redux gets the user data, users data and error state
+
   const [isLoading, setIsLoading] = useState(true);
   const [playOnce, setPlayOnce] = useState(true);
   const [friendsHint, setFriendsHint] = useState([]);
+
+  //Redux gets the user data and users data error
+
   const userData = useSelector((state) => state.userReducer);
   const usersData = useSelector((state) => state.usersReducer);
 
+  /**
+   * @desc notFriendsList suggests new friends to follow in a random way to the user
+   */
   useEffect(() => {
     const notFriendList = () => {
       let array = [];
@@ -17,7 +25,9 @@ const FriendsHint = () => {
         if (user._id !== userData._id && !user.followers.includes(userData._id))
           return array.push(user._id);
       });
+      //suggesting friends in a randomly way
       array.sort(() => 0.5 - Math.random());
+      //showing different amount of friends depending on size of screen
       if (window.innerHeight > 789) {
         array.length = 5;
       } else if (window.innerHeight > 720) {
@@ -41,6 +51,7 @@ const FriendsHint = () => {
   return (
     <div className="get-friends-container">
       <h4>Suggestions</h4>
+      {/* loading icon when info is loading from database */}
       {isLoading ? (
         <div className="icon">
           <i className="fa-solid fa-spinner"></i>

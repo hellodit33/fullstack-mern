@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/src/components/Search.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/src/components/Search.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import { useSelector } from "react-redux";
+
+const Search = () => {
+  //redux gets the hints state
+  const hintsList = useSelector((state) => state.hintsReducer);
+
+  //search is first empty, and used as a condition for showing hints
+  const [search, setNewSearch] = useState("");
+
+  /**
+   *
+   * @desc when the user writes the search value changes into the input value
+   */
+  const handleSearchChange = (e) => {
+    e.preventDefault();
+    setNewSearch(e.target.value);
+  };
+
+  /**
+   * @desc filters the hints based on the searched word
+   */
+  const filtered = !search
+    ? hintsList
+    : hintsList.filter(
+        (hints) =>
+          hints.filmTitle.toLowerCase().includes(search.toLowerCase()) ||
+          hints.mood.toLowerCase().includes(search.toLowerCase()) ||
+          hints.synopsis.toLowerCase().includes(search.toLowerCase())
+      );
+
+  return (
+    &lt;section className="search">
+      &lt;div className="search-hints">
+        &lt;input
+          type="text"
+          className="search"
+          value={search}
+          placeholder="Find your hint"
+          onChange={handleSearchChange}
+        />
+      &lt;/div>
+      &lt;div>
+        {/*show hints only when searching after a specific word */}
+        {search &amp;&amp; filtered &amp;&amp; (
+          &lt;div className="hint-list">
+            {hintsList &amp;&amp;
+              filtered.map((hint) => (
+                &lt;div className="hint">
+                  &lt;h2 className="hint-title">{hint.filmTitle}&lt;/h2>
+                  &lt;p className="hint-mood">For when you're into: {hint.mood}&lt;/p>
+                  &lt;iframe
+                    src={hint.video}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    title={hint.video}
+                  >&lt;/iframe>
+                  &lt;p className="hint-synopsis">{hint.synopsis}&lt;/p>
+                  &lt;ul className="hint-platforms">
+                    {hint.platforms.map((platforms) => (
+                      &lt;>
+                        &lt;li className="hint-platform">{platforms}&lt;/li>
+                      &lt;/>
+                    ))}
+                  &lt;/ul>
+                &lt;/div>
+              ))}
+            {
+              /* shows to the user that there is no hint result for the searched words */ filtered.length ===
+                0 &amp;&amp; (
+                &lt;h1 className="filter-error">
+                  Unfortunately, we can't find anything about "{search}" among
+                  our hints.
+                &lt;/h1>
+              )
+            }
+          &lt;/div>
+        )}
+      &lt;/div>
+    &lt;/section>
+  );
+};
+
+export default Search;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Welcome</a></h2><h3>Modules</h3><ul><li><a href="module-reducers.html">reducers</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addComment">addComment</a></li><li><a href="global.html#addPost">addPost</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#buildNav">buildNav</a></li><li><a href="global.html#checkUser">checkUser</a></li><li><a href="global.html#commentPost">commentPost</a></li><li><a href="global.html#cookieParser">cookieParser</a></li><li><a href="global.html#cors">cors</a></li><li><a href="global.html#corsOptions">corsOptions</a></li><li><a href="global.html#createPost">createPost</a></li><li><a href="global.html#dateParser">dateParser</a></li><li><a href="global.html#deleteComment">deleteComment</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#deletePostComment">deletePostComment</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#editComment">editComment</a></li><li><a href="global.html#editPostComment">editPostComment</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#follow">follow</a></li><li><a href="global.html#followUser">followUser</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getHint">getHint</a></li><li><a href="global.html#getPosts">getPosts</a></li><li><a href="global.html#getTrends">getTrends</a></li><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#getUsers">getUsers</a></li><li><a href="global.html#isEmpty">isEmpty</a></li><li><a href="global.html#likePost">likePost</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#maxAge">maxAge</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#publish">publish</a></li><li><a href="global.html#readPost">readPost</a></li><li><a href="global.html#signIn">signIn</a></li><li><a href="global.html#signInErrors">signInErrors</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#signUpErrors">signUpErrors</a></li><li><a href="global.html#timestampParser">timestampParser</a></li><li><a href="global.html#unfollow">unfollow</a></li><li><a href="global.html#unfollowUser">unfollowUser</a></li><li><a href="global.html#unlikePost">unlikePost</a></li><li><a href="global.html#updateBio">updateBio</a></li><li><a href="global.html#updateCoGenres">updateCoGenres</a></li><li><a href="global.html#updateCoWatching">updateCoWatching</a></li><li><a href="global.html#updateGender">updateGender</a></li><li><a href="global.html#updateGenres">updateGenres</a></li><li><a href="global.html#updateInterests">updateInterests</a></li><li><a href="global.html#updateMood">updateMood</a></li><li><a href="global.html#updatePlatforms">updatePlatforms</a></li><li><a href="global.html#updatePost">updatePost</a></li><li><a href="global.html#updateRent">updateRent</a></li><li><a href="global.html#updateStreamingPatterns">updateStreamingPatterns</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateYearBorn">updateYearBorn</a></li><li><a href="global.html#uploadErrors">uploadErrors</a></li><li><a href="global.html#uploadPicture">uploadPicture</a></li><li><a href="global.html#uploadProfile">uploadProfile</a></li><li><a href="global.html#userInfo">userInfo</a></li><li><a href="global.html#userRoutes">userRoutes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Jun 03 2022 23:36:43 GMT+0200 (centraleuropeisk sommartid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

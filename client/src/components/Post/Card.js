@@ -8,14 +8,26 @@ import DeleteCard from "./DeleteCard";
 import LikeButton from "./LikeButton";
 
 const Card = ({ post }) => {
+  //state for the loading icon
   const [isLoading, setIsLoading] = useState(true);
+
+  //state for the updates
   const [isUpdated, setIsUpdated] = useState(false);
   const [textUpdate, setTextUpdate] = useState(null);
+
+  //state for showing comments
   const [showComments, setShowComments] = useState(false);
+
+  //redux gets the user data and the users data state
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
+
+  //import dispatch for the redux store
   const dispatch = useDispatch();
 
+  /**
+   * @desc updateItem updates the post
+   */
   const updateItem = () => {
     if (textUpdate) {
       dispatch(updatePost(post._id, textUpdate));
@@ -23,6 +35,7 @@ const Card = ({ post }) => {
     setIsUpdated(false);
   };
 
+  //isLoading disappears when userData appears, if it's not empty
   useEffect(() => {
     !isEmpty(usersData[0]) && setIsLoading(false);
   }, [usersData]);
@@ -106,6 +119,7 @@ const Card = ({ post }) => {
               <div className="comment-icon">
                 <i
                   className="fa-solid fa-comment"
+                  /* this button shows and hides comments on clicks */
                   onClick={() => setShowComments(!showComments)}
                 ></i>
                 <span>{post.comments.length}</span>

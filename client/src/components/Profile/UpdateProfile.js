@@ -8,18 +8,25 @@ import FollowHandler from "./FollowHandler";
 import chatty from "./chatty.png";
 
 const UpdateProfile = () => {
-  const [bio, setBio] = useState("");
+  //importing dispatch for the redux store
+  const dispatch = useDispatch();
 
+  //states for updating the bio
+  const [bio, setBio] = useState("");
   const [updateForm, setUpdateForm] = useState(false);
+
+  //Redux gets the user data, users data and error state
   const userData = useSelector((state) => state.userReducer);
   const usersData = useSelector((state) => state.usersReducer);
   const error = useSelector((state) => state.errorReducer.userError);
 
-  const dispatch = useDispatch();
-
+  //states for showing the followers and following popup, at first false, get true when the user clicks
   const [followingPopup, setFollowingPopup] = useState(false);
   const [followersPopup, setFollowersPopup] = useState(false);
 
+  /**
+   * @desc handleUpdate updates the bio
+   */
   const handleUpdate = () => {
     dispatch(updateBio(userData._id, bio));
     setUpdateForm(false);
@@ -39,7 +46,8 @@ const UpdateProfile = () => {
               <div>
                 <UploadImg />
 
-                {/*{errors.maxSize}}
+                {/* the upload image does not work on Heroku so the errors are also commented out 
+                {errors.maxSize}}
               {errors.format}*/}
               </div>
               <div className="bio-update">
@@ -66,6 +74,7 @@ const UpdateProfile = () => {
                 )}
               </div>
               <h4>
+                {/* parsing the created at date from mongodb thanks to the function in utils */}
                 Hint Member since: <br />
                 {dateParser(userData.createdAt)}
               </h4>
@@ -83,6 +92,7 @@ const UpdateProfile = () => {
             <div className="right-part">
               <div className="button-onboarding">
                 <img src={chatty} alt="chatty-mcchatbot"></img>
+                {/* taking the user to onboarding process */}
                 <button
                   onClick={(event) => (window.location.href = "/onboarding")}
                 >
@@ -90,6 +100,7 @@ const UpdateProfile = () => {
                 </button>
               </div>
 
+              {/* showing to the users the followers and subscriptions */}
               {followingPopup && (
                 <div className="popup-profil-container">
                   <div className="modal">

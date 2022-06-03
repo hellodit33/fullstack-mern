@@ -1,3 +1,8 @@
+/**
+ *
+ * @param {string} num
+ * @returns parses date into string
+ */
 export const dateParser = (num) => {
   let options = {
     /*hour: "2-digit",
@@ -16,12 +21,16 @@ export const dateParser = (num) => {
   return date.toString();
 };
 
-//fix time in comments
+/**
+ *
+ * @param {string} num
+ * @returns parses date into string in comments
+ */
 export const timestampParser = (num) => {
   let options = {
-    hour: "2-digit",
+    /*hour: "2-digit",
     minute: "2-digit",
-    second: "2-digit",
+    second: "2-digit",*/
     weekday: "long",
     year: "numeric",
     month: "short",
@@ -31,7 +40,11 @@ export const timestampParser = (num) => {
   return date.toString();
 };
 
-//check if an element is empty or not
+/**
+ *
+ * @param {string} value
+ * @returns checks if a value is empty or not
+ */
 export const isEmpty = (value) => {
   return (
     value === undefined ||

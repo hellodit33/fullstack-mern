@@ -4,12 +4,24 @@ import { deleteComment, editComment } from "../../actions/post.actions";
 import { UidContext } from "../AppContext";
 
 const EditDelete = ({ comment, postId }) => {
+  //states for the edit and delete function
   const [isAuthor, setIsAuthor] = useState(false);
   const [edit, setEdit] = useState(false);
   const [text, setText] = useState("");
+
+  /**
+   * @desc uid is a condition for enabling the user to edit or delete a comment (their own)
+   */
   const uid = useContext(UidContext);
+
+  //importing dispatch for the redux store
   const dispatch = useDispatch();
 
+  /**
+   *
+   * @param {string} e
+   * @desc dispatches the edited comment to the store and edits it in the database
+   */
   const handleEdit = (e) => {
     e.preventDefault();
 
@@ -20,10 +32,17 @@ const EditDelete = ({ comment, postId }) => {
     }
   };
 
+  /**
+   *
+   * @desc deletes the comment from the store and the database
+   */
   const handleDelete = () => {
     dispatch(deleteComment(postId, comment._id));
   };
 
+  /**
+   * @desc checkAuthor sets the author to true if the uid corresponds to the comment's author
+   */
   useEffect(() => {
     const checkAuthor = () => {
       if (uid === comment.commentatorId) {

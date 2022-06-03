@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+//Create schema and model for film hints
 const HintSchema = new mongoose.Schema({
   filmTitle: {
     type: String,

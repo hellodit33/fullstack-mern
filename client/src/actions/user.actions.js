@@ -12,7 +12,6 @@ export const UPDATE_COGENRES = "UPDATE_COGENRES";
 export const UPDATE_INTERESTS = "UPDATE_INTERESTS";
 export const UPDATE_COWATCHING = "UPDATE_COWATCHING";
 export const UPDATE_GENDER = "UPDATE_GENDER";
-
 export const UPDATE_YEAR_BORN = "UPDATE_YEAR_BORN";
 
 export const FOLLOW_USER = "FOLLOW_USER";
@@ -20,6 +19,12 @@ export const UNFOLLOW_USER = "UNFOLLOW_USER";
 
 export const GET_USER_ERRORS = "GET_USER_ERRORS";
 
+/**
+ *
+ * @param {string} uid
+ * @returns the user data
+ *
+ */
 export const getUser = (uid) => {
   return (dispatch) => {
     return axios
@@ -31,6 +36,12 @@ export const getUser = (uid) => {
   };
 };
 
+/**
+ *
+ * @param {object} data
+ * @param {string} id
+ * @returns posts the uploaded user picture (not working on Heroku)
+ */
 export const uploadPicture = (data, id) => {
   return (dispatch) => {
     return axios
@@ -51,6 +62,12 @@ export const uploadPicture = (data, id) => {
   };
 };
 
+/**
+ *
+ * @param {string} userId
+ * @param {string} bio
+ * @returns the updated bio
+ */
 export const updateBio = (userId, bio) => {
   return (dispatch) => {
     return axios({
@@ -65,6 +82,12 @@ export const updateBio = (userId, bio) => {
   };
 };
 
+/**
+ *
+ * @param {string} userId
+ * @param {array} platforms
+ * @returns the updated platforms array
+ */
 export const updatePlatforms = (userId, platforms) => {
   return (dispatch) => {
     return axios({
@@ -79,6 +102,12 @@ export const updatePlatforms = (userId, platforms) => {
   };
 };
 
+/**
+ *
+ * @param {string} userId
+ * @param {array} streamingPattern
+ * @returns the streaming pattern array
+ */
 export const updateStreamingPatterns = (userId, streamingPattern) => {
   return (dispatch) => {
     return axios({
@@ -96,6 +125,12 @@ export const updateStreamingPatterns = (userId, streamingPattern) => {
   };
 };
 
+/**
+ *
+ * @param {string} userId
+ * @param {string} mood
+ * @returns the updated user's mood
+ */
 export const updateMood = (userId, mood) => {
   return (dispatch) => {
     return axios({
@@ -113,6 +148,12 @@ export const updateMood = (userId, mood) => {
   };
 };
 
+/**
+ *
+ * @param {string} userId
+ * @param {string} rent
+ * @returns the rent value - yes or no
+ */
 export const updateRent = (userId, rent) => {
   return (dispatch) => {
     return axios({
@@ -130,6 +171,12 @@ export const updateRent = (userId, rent) => {
   };
 };
 
+/**
+ *
+ * @param {string} userId
+ * @param {array} genres
+ * @returns the updated genres array
+ */
 export const updateGenres = (userId, genres) => {
   return (dispatch) => {
     return axios({
@@ -147,6 +194,12 @@ export const updateGenres = (userId, genres) => {
   };
 };
 
+/**
+ *
+ * @param {string} userId
+ * @param {array} cogenres
+ * @returns the updated co-genres array
+ */
 export const updateCoGenres = (userId, cogenres) => {
   return (dispatch) => {
     return axios({
@@ -164,6 +217,12 @@ export const updateCoGenres = (userId, cogenres) => {
   };
 };
 
+/**
+ *
+ * @param {string} userId
+ * @param {array} interests
+ * @returns the updated interests array
+ */
 export const updateInterests = (userId, interests) => {
   return (dispatch) => {
     return axios({
@@ -181,6 +240,12 @@ export const updateInterests = (userId, interests) => {
   };
 };
 
+/**
+ *
+ * @param {string} userId
+ * @param {boolean} cowatching
+ * @returns the updated cowatching boolean
+ */
 export const updateCoWatching = (userId, cowatching) => {
   return (dispatch) => {
     return axios({
@@ -198,6 +263,12 @@ export const updateCoWatching = (userId, cowatching) => {
   };
 };
 
+/**
+ *
+ * @param {string} userId
+ * @param {string} gender
+ * @returns the updated gender
+ */
 export const updateGender = (userId, gender) => {
   return (dispatch) => {
     return axios({
@@ -215,6 +286,12 @@ export const updateGender = (userId, gender) => {
   };
 };
 
+/**
+ *
+ * @param {string} userId
+ * @param {string} yearBorn
+ * @returns the updated year born
+ */
 export const updateYearBorn = (userId, yearBorn) => {
   return (dispatch) => {
     return axios({
@@ -232,6 +309,12 @@ export const updateYearBorn = (userId, yearBorn) => {
   };
 };
 
+/**
+ *
+ * @param {string} followerId
+ * @param {string} idToFollow
+ * @returns the id to follow
+ */
 export const followUser = (followerId, idToFollow) => {
   return (dispatch) => {
     return axios({
@@ -246,6 +329,12 @@ export const followUser = (followerId, idToFollow) => {
   };
 };
 
+/**
+ *
+ * @param {string} followerId
+ * @param {string} idToUnfollow
+ * @returns the id to unfollow
+ */
 export const unfollowUser = (followerId, idToUnfollow) => {
   return (dispatch) => {
     return axios({

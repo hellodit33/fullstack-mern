@@ -2,15 +2,24 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 const Search = () => {
+  //redux gets the hints state
   const hintsList = useSelector((state) => state.hintsReducer);
 
+  //search is first empty, and used as a condition for showing hints
   const [search, setNewSearch] = useState("");
 
+  /**
+   *
+   * @desc when the user writes the search value changes into the input value
+   */
   const handleSearchChange = (e) => {
     e.preventDefault();
     setNewSearch(e.target.value);
   };
 
+  /**
+   * @desc filters the hints based on the searched word
+   */
   const filtered = !search
     ? hintsList
     : hintsList.filter(
@@ -32,6 +41,7 @@ const Search = () => {
         />
       </div>
       <div>
+        {/*show hints only when searching after a specific word */}
         {search && filtered && (
           <div className="hint-list">
             {hintsList &&
@@ -56,12 +66,15 @@ const Search = () => {
                   </ul>
                 </div>
               ))}
-            {filtered.length === 0 && (
-              <h1 className="filter-error">
-                Unfortunately, we can't find anything about "{search}" among our
-                hints.
-              </h1>
-            )}
+            {
+              /* shows to the user that there is no hint result for the searched words */ filtered.length ===
+                0 && (
+                <h1 className="filter-error">
+                  Unfortunately, we can't find anything about "{search}" among
+                  our hints.
+                </h1>
+              )
+            }
           </div>
         )}
       </div>

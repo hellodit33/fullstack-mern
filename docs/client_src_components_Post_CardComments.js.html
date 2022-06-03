@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/src/components/Post/CardComments.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/src/components/Post/CardComments.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addComment, getPosts } from "../../actions/post.actions";
+import FollowHandler from "../Profile/FollowHandler";
+import { isEmpty, timestampParser } from "../Utils";
+import EditDeleteComment from "./EditDeleteComment";
+
+const CardComments = ({ post }) => {
+  //state for the comment text
+  const [text, setText] = useState("");
+
+  //redux gets the users and user data state
+  const usersData = useSelector((state) => state.usersReducer);
+  const userData = useSelector((state) => state.userReducer);
+
+  //import dispatch for the redux store
+  const dispatch = useDispatch();
+
+  /**
+   *
+   * @param {string} e
+   * @desc handleComment dispatches the new comment and adds it to the database and to the posts so that it is published immediately through a double dispatch
+   */
+  const handleComment = (e) => {
+    e.preventDefault();
+    if (text) {
+      dispatch(addComment(post._id, userData._id, text, userData.pseudo))
+        .then(() => dispatch(getPosts()))
+        .then(() => setText(""));
+    }
+  };
+  return (
+    &lt;div className="comments-container">
+      {post.comments.map((comment) => {
+        return (
+          &lt;div
+            className={
+              comment.commentatorId === userData._id
+                ? "comment-container client"
+                : "comment-container"
+            }
+            key={comment._id}
+          >
+            &lt;div className="left-part">
+              &lt;img
+                src={
+                  !isEmpty(usersData[0]) &amp;&amp;
+                  usersData
+                    .map((user) => {
+                      if (user._id === comment.commentatorId)
+                        return user.picture;
+                      else return null;
+                    })
+                    .join("")
+                }
+                alt="commentator-pic"
+              />
+            &lt;/div>
+            &lt;div className="right-part">
+              &lt;div className="comment-header">
+                &lt;div className="pseudo">
+                  &lt;h3>{comment.commentatorPseudo}&lt;/h3>
+                  {comment.commentatorId !== userData._id &amp;&amp; (
+                    &lt;FollowHandler
+                      idToFollow={comment.commentatorId}
+                      type={"card"}
+                    />
+                  )}
+                &lt;/div>
+                &lt;span>{timestampParser(comment.timestamp)}&lt;/span>
+              &lt;/div>
+              &lt;p>{comment.text}&lt;/p>
+              &lt;EditDeleteComment comment={comment} postId={post._id} />
+            &lt;/div>
+          &lt;/div>
+        );
+      })}
+      {userData._id &amp;&amp; (
+        &lt;form action="" onSubmit={handleComment} className="comment-form">
+          &lt;input
+            type="text"
+            name="text"
+            onChange={(e) => {
+              setText(e.target.value);
+            }}
+            value={text}
+            placeholder="Comment here"
+          />
+          &lt;input type="submit" value="send" />
+        &lt;/form>
+      )}
+    &lt;/div>
+  );
+};
+
+export default CardComments;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Welcome</a></h2><h3>Modules</h3><ul><li><a href="module-reducers.html">reducers</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addComment">addComment</a></li><li><a href="global.html#addPost">addPost</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#buildNav">buildNav</a></li><li><a href="global.html#checkUser">checkUser</a></li><li><a href="global.html#commentPost">commentPost</a></li><li><a href="global.html#cookieParser">cookieParser</a></li><li><a href="global.html#cors">cors</a></li><li><a href="global.html#corsOptions">corsOptions</a></li><li><a href="global.html#createPost">createPost</a></li><li><a href="global.html#dateParser">dateParser</a></li><li><a href="global.html#deleteComment">deleteComment</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#deletePostComment">deletePostComment</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#editComment">editComment</a></li><li><a href="global.html#editPostComment">editPostComment</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#follow">follow</a></li><li><a href="global.html#followUser">followUser</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getHint">getHint</a></li><li><a href="global.html#getPosts">getPosts</a></li><li><a href="global.html#getTrends">getTrends</a></li><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#getUsers">getUsers</a></li><li><a href="global.html#isEmpty">isEmpty</a></li><li><a href="global.html#likePost">likePost</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#maxAge">maxAge</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#publish">publish</a></li><li><a href="global.html#readPost">readPost</a></li><li><a href="global.html#signIn">signIn</a></li><li><a href="global.html#signInErrors">signInErrors</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#signUpErrors">signUpErrors</a></li><li><a href="global.html#timestampParser">timestampParser</a></li><li><a href="global.html#unfollow">unfollow</a></li><li><a href="global.html#unfollowUser">unfollowUser</a></li><li><a href="global.html#unlikePost">unlikePost</a></li><li><a href="global.html#updateBio">updateBio</a></li><li><a href="global.html#updateCoGenres">updateCoGenres</a></li><li><a href="global.html#updateCoWatching">updateCoWatching</a></li><li><a href="global.html#updateGender">updateGender</a></li><li><a href="global.html#updateGenres">updateGenres</a></li><li><a href="global.html#updateInterests">updateInterests</a></li><li><a href="global.html#updateMood">updateMood</a></li><li><a href="global.html#updatePlatforms">updatePlatforms</a></li><li><a href="global.html#updatePost">updatePost</a></li><li><a href="global.html#updateRent">updateRent</a></li><li><a href="global.html#updateStreamingPatterns">updateStreamingPatterns</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateYearBorn">updateYearBorn</a></li><li><a href="global.html#uploadErrors">uploadErrors</a></li><li><a href="global.html#uploadPicture">uploadPicture</a></li><li><a href="global.html#uploadProfile">uploadProfile</a></li><li><a href="global.html#userInfo">userInfo</a></li><li><a href="global.html#userRoutes">userRoutes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Jun 03 2022 23:36:43 GMT+0200 (centraleuropeisk sommartid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

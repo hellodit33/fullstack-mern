@@ -1,8 +1,15 @@
+//controller requirements
 const HintModel = require("../models/hint.model");
 const UserModel = require("../models/user.model");
 const { uploadErrors } = require("../utils/errors.utils");
 const ObjectID = require("mongoose").Types.ObjectId;
 
+/**
+ *
+ * @param {json} req
+ * @param {json} res
+ * @desc readPost finds all hints available in db and shows them to the user (depending on user criterias)
+ */
 module.exports.readPost = async (req, res) => {
   const hint = await HintModel.find();
   res.status(200).json(hint);
