@@ -83,7 +83,6 @@ const Card = ({ post }) => {
             {post.picture && (
               <img src={post.picture} alt="card-pic" className="card-pic"></img>
             )}
-
             {post.video && (
               <iframe
                 width="500"

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server",
+    "start": "node server",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [],
@@ -13,14 +13,13 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
-    "cloudinary": "^1.30.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.3",
-    "multer": "^2.0.0-rc.1",
+    "multer": "2.0.0-rc.1",
     "nodemon": "^2.0.16",
     "validator": "^13.7.0"
   }

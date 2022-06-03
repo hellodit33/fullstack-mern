@@ -673,7 +673,7 @@ const Onboarding = () => {
                   enjoy from time to time!
                 </h2>
                 <div className="drawer-group">
-                  <img src={drawer} alt="drawer to store liked genres"></img>
+                  <img src={drawer} alt="drawer"></img>
 
                   <div className="group">
                     <input

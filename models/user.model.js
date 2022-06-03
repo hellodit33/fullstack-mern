@@ -28,9 +28,6 @@ const userSchema = new mongoose.Schema(
       max: 1024,
       minlength: 6,
     },
-    cloudinary_id: {
-      type: String,
-    },
     yearBorn: {
       type: String,
     },

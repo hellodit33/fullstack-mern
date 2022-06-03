@@ -27,7 +27,7 @@ const NewPostForm = () => {
       dispatch(getPosts());
       cancelPost();
     } else {
-      alert("Please write something");
+      alert("Veuillez entrer un message");
     }
   };
 
@@ -68,15 +68,13 @@ const NewPostForm = () => {
   return (
     <div className="post-container">
       {isLoading ? (
-        <div className="isLoading">
-          <i className="fa-solid fa-spinner"></i>
-        </div>
+        <i className="fa-solid fa-spinner"></i>
       ) : (
         <>
           <div className="data">
             <p>
               <span>{userData.following ? userData.following.length : 0}</span>{" "}
-              Subscription
+              Following
               {userData.following && userData.following.length > 1 ? "s" : null}
             </p>
             <p>
@@ -112,7 +110,7 @@ const NewPostForm = () => {
                   </div>
                   <div className="content">
                     <p>{message}</p>
-                    <img src={postPicture} />
+                    <img src={postPicture} alt="" />
                     {video && (
                       <iframe
                         src={video}

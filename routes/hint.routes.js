@@ -3,7 +3,6 @@ const hintController = require("../controllers/hint.controller");
 
 router.get("/", hintController.readPost);
 
-//to do later
 /*
 router.patch("/like-post/:id", hintController.likePost);
 router.patch("/:id", hintController.unlikePost);

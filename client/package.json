@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "-": "^0.0.1",
     "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
@@ -21,7 +20,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.1",
-    "save": "^2.5.0",
+    "multer": "2.0.0-rc.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

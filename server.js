@@ -8,7 +8,6 @@ require("dotenv").config({ path: "./config/.env" });
 require("./config/db");
 const { checkUser, requireAuth } = require("./middleware/auth.middleware");
 const cors = require("cors");
-const path = require("path");
 
 const app = express();
 
@@ -23,6 +22,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+//middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -38,6 +38,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/hint", hintRoutes);
 
+//heroku
 app.use(express.static(path.join(__dirname, "/client/build")));
 
 app.get("*", (req, res) => {

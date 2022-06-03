@@ -9,7 +9,6 @@ import chatty from "./chatty.png";
 
 const UpdateProfile = () => {
   const [bio, setBio] = useState("");
-  const [onboarding, setOnboarding] = useState(false);
 
   const [updateForm, setUpdateForm] = useState(false);
   const userData = useSelector((state) => state.userReducer);
@@ -40,8 +39,8 @@ const UpdateProfile = () => {
               <div>
                 <UploadImg />
 
-                {error.maxSize}
-                {error.format}
+                {/*{errors.maxSize}}
+              {errors.format}*/}
               </div>
               <div className="bio-update">
                 <h3>Bio</h3>
