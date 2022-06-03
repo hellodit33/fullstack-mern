@@ -4,8 +4,6 @@ const userController = require("../controllers/user.controller");
 const uploadController = require("../controllers/upload.controller");
 /*const multer = require("multer");
 const upload = multer();*/
-/*const cloudinary = require("../utils/cloudinary");
-const upload = require("../utils/multer");*/
 
 //Authorization to register
 router.post("/register", authController.signUp);
@@ -24,7 +22,7 @@ router.delete("/:id", userController.deleteUser);
 router.patch("/follow/:id", userController.follow);
 router.patch("/unfollow/:id", userController.unfollow);
 
-upload;
+//upload
 /*router.post("/upload", upload.single("file"), uploadController.uploadProfile);*/
 
 module.exports = router;

@@ -3,11 +3,8 @@ const fs = require("fs");
 const { promisify } = require("util");
 const pipeline = promisify(require("stream").pipeline);
 const { uploadErrors } = require("../utils/errors.utils");
-const cloudinary = require("../utils/cloudinary");
-const upload = require("../utils/multer");
 
 /*module.exports.uploadProfile = async (req, res) => {
-  /*multer code
   try {
     if (
       req.file.detectedMimeType != "image/jpg" &&
@@ -28,21 +25,20 @@ const upload = require("../utils/multer");
     fs.createWriteStream(
       `${__dirname}/../client/public/uploads/profil/${fileName}`
     )
-  );*/
-/*cloudinary+multer code after
-  try {
-    const result = await cloudinary.uploader.upload(req.file.path);
+  );
 
+  try {
     await UserModel.findByIdAndUpdate(
       req.body.userId,
-      { $set: { picture: result.secure_url, cloudinary_id: result.public_id } },
+      { $set: { picture: "./uploads/profil/" + fileName } },
       { new: true, upsert: true, setDefaultsOnInsert: true },
       (err, data) => {
         if (!err) return res.send(data);
-        else return res.send({ message: err });
+        else return res.status(500).send({ message: err });
       }
     );
   } catch (err) {
     return res.status(500);
   }
-}*/
+};
+*/
