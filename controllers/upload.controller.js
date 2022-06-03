@@ -6,7 +6,7 @@ const { uploadErrors } = require("../utils/errors.utils");
 const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer");
 
-module.exports.uploadProfile = async (req, res) => {
+/*module.exports.uploadProfile = async (req, res) => {
   /*multer code
   try {
     if (
@@ -29,7 +29,7 @@ module.exports.uploadProfile = async (req, res) => {
       `${__dirname}/../client/public/uploads/profil/${fileName}`
     )
   );*/
-  //cloudinary+multer code after
+/*cloudinary+multer code after
   try {
     const result = await cloudinary.uploader.upload(req.file.path);
 
@@ -45,4 +45,4 @@ module.exports.uploadProfile = async (req, res) => {
   } catch (err) {
     return res.status(500);
   }
-};
+}*/
